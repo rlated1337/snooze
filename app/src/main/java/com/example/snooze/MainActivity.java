@@ -12,6 +12,7 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
     private Retrofit retrofit;
+    private static final String accessToken = "TCmDmaQGQt76PArgLl6BbAaEsgQvPX3vqwG82Pzq4DXujexKguwnXXwghGgKQVsF";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
 
         SnoozeUsersService service = retrofit.create(SnoozeUsersService.class);
 
-        Call<List<SnoozeUsers>> call = service.getAllUsers();
+        Call<List<SnoozeUsers>> call = service.getAllUsers(accessToken);
 
         call.enqueue(new Callback<List<SnoozeUsers>>() {
             @Override
