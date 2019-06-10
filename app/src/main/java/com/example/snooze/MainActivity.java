@@ -12,7 +12,7 @@ import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
     private Retrofit retrofit;
-    private static final String accessToken = "TCmDmaQGQt76PArgLl6BbAaEsgQvPX3vqwG82Pzq4DXujexKguwnXXwghGgKQVsF";
+    private static final String accessToken = "GN0tME3nUBa6auETCDju80cAzMSMDaDY791UafudXydp6AwwLfVjEJDDxJTjHEg3";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

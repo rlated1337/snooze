@@ -2,7 +2,7 @@ package com.example.snooze;
 
 import com.google.gson.annotations.SerializedName;
 
-public class CapsulePrefernces {
+public class CapsulePreferences {
 
     @SerializedName("SnoozeUser_id")
     private Integer snoozeuser_id;
@@ -22,8 +22,8 @@ public class CapsulePrefernces {
     @SerializedName("id")
     private Integer id;
 
-    public CapsulePrefernces(Integer snoozeuser_id, Integer bedLegAngle, Integer bedBackAngle, Integer lightLevel,
-                             Integer volumenLevel, Integer id) {
+    public CapsulePreferences(Integer snoozeuser_id, Integer bedLegAngle, Integer bedBackAngle, Integer lightLevel,
+                              Integer volumenLevel, Integer id) {
         this.snoozeuser_id = snoozeuser_id;
         this.bedLegAngle = bedLegAngle;
         this.bedBackAngle = bedBackAngle;
