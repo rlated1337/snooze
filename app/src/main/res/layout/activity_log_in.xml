@@ -16,7 +16,7 @@
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/SnoozeLogo" />
+        app:srcCompat="@drawable/snoozelogo" />
 
     <Button
         android:id="@+id/btn_LogIn_AboutSnooze"
@@ -33,27 +33,27 @@
         android:layout_width="150dp"
         android:layout_height="60dp"
         android:layout_marginStart="40dp"
-        android:layout_marginBottom="168dp"
+        android:layout_marginTop="124dp"
         android:text="LogIn"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_LogIn_Password" />
 
     <Button
         android:id="@+id/btn_LogIn_Register"
         android:layout_width="150dp"
         android:layout_height="60dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="168dp"
+        android:layout_marginTop="124dp"
+        android:layout_marginEnd="40dp"
         android:text="Register"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edt_LogIn_Password" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="56dp"
-        android:layout_marginBottom="4dp"
+        android:layout_marginEnd="60dp"
+        android:layout_marginBottom="12dp"
         android:text="No Account?"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/btn_LogIn_Register"
