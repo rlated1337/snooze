@@ -19,12 +19,15 @@ public class SnoozeUsers {
     @SerializedName("id")
     private Integer id;
 
-    public SnoozeUsers(String realm, String username, String email, Boolean emailVerfified, Integer id){
+    @SerializedName("password")
+    private String password;
+
+    public SnoozeUsers(String realm, String username, String email, Boolean emailVerified, String password){
         this.realm = realm;
         this.username = username;
         this.email = email;
-        this.emailVerified = emailVerfified;
-        this.id = id;
+        this.emailVerified = emailVerified;
+        this.password = password;
     }
 
     public String getRealm(){
