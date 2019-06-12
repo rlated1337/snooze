@@ -19,36 +19,40 @@ public interface SnoozeUsersService {
     Call<List<SnoozeUsers>> getAllUsers(@Query("access_token") String key);
 
     @POST("SnoozeUsers")
-    Call<SnoozeUsers> postNewUser(@Query("access_token") String key, @Body SnoozeUsers jsonUser);
-
+    Call<SnoozeUsers> postNewUser(@Query("access_token") String key, @Body SnoozeUsers user);
 
     /* USER GETTING/PATCHING/DELETING {ID} */
     @GET("SnoozeUsers/{id}")
-    Call<SnoozeUsers> getSpecificUser(@Path("id") String id, @Query("access_token") String key);
+    Call<List<SnoozeUsers>> getSpecificUser(@Path("id") String id, @Query("access_token") String key);
 
     @PUT("SnoozeUsers/{id}")
-    Call<SnoozeUsers> patchSpecificUser(@Query("access_token") String key, @Path("id") String id, @Query("data") String jsonData);
+    Call<SnoozeUsers> patchSpecificUser(@Path("id") String id, @Query("access_token") String key, @Body SnoozeUsers user);
 
     @DELETE("SnoozeUsers/{id}")
-    Call<SnoozeUsers> deleteSpecificUser(@Query("access_token") String key, @Path("id") String id);
-
+    Call<SnoozeUsers> deleteSpecificUser(@Path("id") String id, @Query("access_token") String key);
 
     /* ACCESS TOKEN RELATED STUFF GET/POST/DELETE/COUNT */
     @GET("SnoozeUsers/{id}/accessTokens")
-    Call<List<SnoozeUsers>> getAccessToken(@Query("access_token") String key, @Path("id") String id);
+    Call<List<SnoozeUsers>> getAccessToken(@Path("id") String id, @Query("access_token") String key);
 
     @POST("SnoozeUsers/{id}/accessTokens")
-    Call<POST> postAccessToken(@Query("access_token") String key, @Path("id") String id, @Query("data") String jsonData);
+    Call<POST> postAccessToken(@Path("id") String id, @Query("access_token") String key, @Query("data") String jsonData);
 
     @DELETE("SnoozeUsers/{id}/accessTokens")
-    Call<List<SnoozeUsers>> deleteAccessToken(@Query("access_token") String key, @Path("id") String id);
+    Call<SnoozeUsers> deleteAccessToken(@Path("id") String id, @Query("access_token") String key);
 
     @GET("SnoozeUsers/{id}/accessTokens/count")
-    Call<List<SnoozeUsers>> countAccessToken(@Query("access_token") String key, @Path("id") String id);
+    Call<List<SnoozeUsers>> countAccessToken(@Path("id") String id, @Query("access_token") String key);
 
 
-    /**/
+    /* SNOOZEUSER BOOKINGS */
+    @GET("SnoozeUsers/{id}/bookings")
+    Call<List<SnoozeUsers>> getBookings(@Path("id") String id, @Query("access_token") String key);
 
+    @POST("SnoozeUsers/{id}/bookings")
+    Call<POST> placeBooking(@Path("id") String id, @Query("access_token") String key, @Body Bookings booking);
 
+    @DELETE("SnoozeUsers/{id}/bookings")
+    Call<DELETE> deleteAllBookings(@Path("id") String id, @Query("access_token") String key);
 
 }
