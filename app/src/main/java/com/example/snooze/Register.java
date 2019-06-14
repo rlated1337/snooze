@@ -12,7 +12,7 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        Button btn_Back = findViewById(R.id.btn_AboutSnooze_back);
+        Button btn_Back = findViewById(R.id.btn_Register_back);
 
         btn_Back.setOnClickListener(new View.OnClickListener() {
             @Override
