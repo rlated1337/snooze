@@ -30,7 +30,7 @@ public interface BookingService {
     @PATCH("Bookings")
     Call<Bookings> patchBooking(@Query("access_token") String key, @Body Bookings booking);
 
-    /* BOOKINGS{id} GET/POST/PUT/PATCH */
+    /* BOOKINGS{id} GET/PUT/PATCH/DELETE */
 
     @GET("Bookings/{id}")
     Call<Bookings> getSpecificBooking(@Path("id") String id , @Query("access_token") String key);
@@ -42,7 +42,7 @@ public interface BookingService {
     Call<Bookings> patchSpecificBooking(@Path("id") String id, @Query("access_token") String key, @Body Bookings booking);
 
     @DELETE("Bookings/{id}")
-    Call<Bookings> deleteSpecificBooking(@Path("id") String id, @Query("access_token") String key);
+    Call<Void> deleteSpecificBooking(@Path("id") String id, @Query("access_token") String key);
 
     /* BOOKINGS{id}/.... GET/POST */
 

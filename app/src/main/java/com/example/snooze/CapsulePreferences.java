@@ -23,13 +23,12 @@ public class CapsulePreferences {
     private Integer id;
 
     public CapsulePreferences(Integer snoozeuser_id, Integer bedLegAngle, Integer bedBackAngle, Integer lightLevel,
-                              Integer volumenLevel, Integer id) {
+                              Integer volumenLevel) {
         this.snoozeuser_id = snoozeuser_id;
         this.bedLegAngle = bedLegAngle;
         this.bedBackAngle = bedBackAngle;
         this.lightLevel = lightLevel;
         this.volumenLevel = volumenLevel;
-        this.id = id;
     }
 
     public Integer getSnoozeuser_id() {
