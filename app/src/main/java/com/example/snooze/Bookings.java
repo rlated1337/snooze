@@ -48,7 +48,7 @@ public class Bookings {
 
     public Bookings(Integer snoozeuser_id, Integer capsule_id, Integer pin, Date date, Integer firstTimeFrame,
                     Integer lastTimeFrame, String vendor, Integer amount, Boolean isVerified, String payerEmail,
-                    Integer payedAmount, Date payedDate, Integer id) {
+                    Integer payedAmount, Date payedDate) {
         this.snoozeuser_id = snoozeuser_id;
         this.capsule_id = capsule_id;
         this.pin = pin;
@@ -61,7 +61,7 @@ public class Bookings {
         this.payerEmail = payerEmail;
         this.payedAmount = payedAmount;
         this.payedDate = payedDate;
-        this.id = id;
+
     }
 
     public Integer getSnoozeuser_id() {

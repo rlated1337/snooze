@@ -16,15 +16,18 @@ public class Capsules {
     @SerializedName("IPAddress")
     private String ipAddress;
 
+    @SerializedName("Price")
+    private Integer price;
+
     @SerializedName("id")
     private Integer id;
 
-    public Capsules(String name, Integer latitude, Integer longitude, String ipAddress, Integer id) {
+    public Capsules(String name, Integer latitude, Integer longitude, String ipAddress, Integer price) {
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
         this.ipAddress = ipAddress;
-        this.id = id;
+        this.price = price;
     }
 
     public String getName() {
@@ -57,6 +60,14 @@ public class Capsules {
 
     public void setIpAddress(String ipAddress) {
         this.ipAddress = ipAddress;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
     public Integer getId() {
