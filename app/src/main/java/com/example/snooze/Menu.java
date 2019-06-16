@@ -31,7 +31,7 @@ public class Menu extends AppCompatActivity {
             }
         });
 
-        
+
     }
     public void switchScreens(Class s)
     {
