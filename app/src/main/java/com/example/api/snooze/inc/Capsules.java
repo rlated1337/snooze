@@ -1,4 +1,4 @@
-package com.example.snooze;
+package com.example.api.snooze.inc;
 
 import com.google.gson.annotations.SerializedName;
 

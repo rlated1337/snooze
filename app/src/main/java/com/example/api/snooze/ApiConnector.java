@@ -1,4 +1,4 @@
-package com.example.snooze;
+package com.example.api.snooze;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;

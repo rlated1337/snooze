@@ -1,4 +1,7 @@
-package com.example.snooze;
+package com.example.api.snooze;
+
+import com.example.api.snooze.inc.Bookings;
+import com.example.api.snooze.inc.Capsules;
 
 import java.util.List;
 

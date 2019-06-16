@@ -1,4 +1,4 @@
-package com.example.snooze;
+package com.example.api.snooze;
 
 import java.security.cert.CertificateException;
 

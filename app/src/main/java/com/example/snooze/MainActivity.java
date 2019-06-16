@@ -3,11 +3,10 @@ package com.example.snooze;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.example.api.snooze.ApiConnector;
+import com.example.api.snooze.SnoozeUsersService;
+
 import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
