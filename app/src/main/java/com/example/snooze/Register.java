@@ -4,8 +4,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class Register extends AppCompatActivity {
+    private Button btnBack;
+    private Button btnRegister;
+    private Button btnAboutSnooze;
+    private EditText edtUserName;
+    private EditText edtEmail;
+    private EditText edtPassword;
+    private EditText edtPasswordCheck;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

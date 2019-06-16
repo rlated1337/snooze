@@ -6,13 +6,14 @@ import android.view.View;
 import android.widget.Button;
 
 public class AboutSnooze extends AppCompatActivity {
+    private  Button btn_Back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_snooze);
 
-        Button btn_Back = findViewById(R.id.btn_AboutSnooze_back);
+        btn_Back = findViewById(R.id.btn_AboutSnooze_back);
 
         btn_Back.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -88,4 +88,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/edt_LogIn_Email" />
+
+    <TextView
+        android:id="@+id/edt_LogIn_Feedback"
+        android:layout_width="222dp"
+        android:layout_height="28dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:layout_editor_absoluteY="467dp" />
 </android.support.constraint.ConstraintLayout>

@@ -5,18 +5,25 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 public class LogIn extends AppCompatActivity {
 
+    private Button btnLogIn;
+    private Button btnRegister;
+    private Button btnInfo;
+    private EditText edtEmail;
+    private EditText edtPassword;
+    private EditText edtInfoText;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
 
-        Button btnLogIn = findViewById(R.id.btn_LogIn_LogIn);
-        Button btnRegister = findViewById(R.id.btn_LogIn_Register);
-        Button btnInfo = findViewById(R.id.btn_LogIn_AboutSnooze);
+        btnLogIn = findViewById(R.id.btn_LogIn_LogIn);
+        btnRegister = findViewById(R.id.btn_LogIn_Register);
+        btnInfo = findViewById(R.id.btn_LogIn_AboutSnooze);
 
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
