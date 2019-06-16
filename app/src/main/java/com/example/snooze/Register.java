@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.model.snooze.controller.UserController;
+
 public class Register extends AppCompatActivity {
     private Button btnBack;
     private Button btnRegister;
@@ -15,6 +17,8 @@ public class Register extends AppCompatActivity {
     private EditText edtEmail;
     private EditText edtPassword;
     private EditText edtPasswordCheck;
+
+    UserController ucontroller = new UserController();
 
 
     @Override
@@ -40,21 +44,21 @@ public class Register extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String username = edtUserName.getText().toString();
+                String email = edtEmail.getText().toString();
+                String password = edtPassword.getText().toString();
 
-            }
-        });
+                ucontroller.register(username,email,password);
 
-        btnAboutSnooze.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                switchScreens(AboutSnooze.class);
             }
         });
     }
+
     public void switchScreens(Class s)
     {
         Intent i = new Intent(this,s);
         startActivity(i);
 
     }
+
 }
