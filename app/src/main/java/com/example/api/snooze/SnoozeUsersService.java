@@ -1,7 +1,10 @@
 package com.example.api.snooze;
 
 import com.example.api.snooze.inc.Bookings;
+import com.example.api.snooze.inc.Credentials;
 import com.example.api.snooze.inc.SnoozeUsers;
+import com.example.api.snooze.inc.CapsulePreferences;
+
 
 import java.util.List;
 
@@ -38,7 +41,7 @@ public interface SnoozeUsersService {
     Call<List<SnoozeUsers>> getAccessToken(@Path("id") String id, @Query("access_token") String key);
 
     @POST("SnoozeUsers/{id}/accessTokens")
-    Call<POST> postAccessToken(@Path("id") String id, @Query("access_token") String key, @Query("data") String jsonData);
+    Call<SnoozeUsers> postAccessToken(@Path("id") String id, @Query("access_token") String key, @Query("data") String jsonData);
 
     @DELETE("SnoozeUsers/{id}/accessTokens")
     Call<Void> deleteAccessToken(@Path("id") String id, @Query("access_token") String key);
@@ -52,7 +55,7 @@ public interface SnoozeUsersService {
     Call<List<SnoozeUsers>> getBookings(@Path("id") String id, @Query("access_token") String key);
 
     @POST("SnoozeUsers/{id}/bookings")
-    Call<POST> placeBooking(@Path("id") String id, @Query("access_token") String key, @Body Bookings booking);
+    Call<SnoozeUsers> placeBooking(@Path("id") String id, @Query("access_token") String key, @Body Bookings booking);
 
     @DELETE("SnoozeUsers/{id}/bookings")
     Call<Void> deleteAllBookings(@Path("id") String id, @Query("access_token") String key);
@@ -66,9 +69,41 @@ public interface SnoozeUsersService {
     Call<List<SnoozeUsers>> getCapsulePreference(@Path("id") String id, @Query("access_token") String key);
 
     @PUT("SnoozeUsers/{id}/capsulePreference")
-    Call<SnoozeUsers> updateCapsulePreferences(@Path("id") String id, @Query("access_token") String key, Body );
+    Call<SnoozeUsers> updateCapsulePreferences(@Path("id") String id, @Query("access_token") String key, @Body CapsulePreferences capsulePreferences);
+
+    @POST("SnoozeUsers/{id}/capsulePreference")
+    Call<SnoozeUsers>  postCapsulePreferences(@Path("id") String id, @Query("access_token") String key, @Body CapsulePreferences capsulePreferences);
+
+    @DELETE("SnoozeUsers/{id}/capsulePreference")
+    Call<Void> deleteCapsulePreferences(@Path("id") String id, @Query("access_token") String key);
 
 
+    /* GERNEAL */
+    @GET("SnoozeUsers/{id}/exists")
+    Call<List<SnoozeUsers>> checkExistanceUser(@Path("id") String id, @Query("access_token") String key);
 
+    @POST("SnoozeUsers/{id}/verify")
+    Call<SnoozeUsers> verifyUser(@Path("id") String id, @Query("access_token") String key);
 
+    @POST("SnoozeUsers/change-password")
+    Call<SnoozeUsers> changePassword(@Query("access_token") String key, @Query("old_pw") String oldPW, @Query("new_pw") String newPW);
+
+    @GET("SnoozeUsers/change-stream")
+    Call<List<SnoozeUsers>> getStream(@Query("access_token") String key, @Query("options") String options);
+
+    @POST("SnoozeUsers/change-stream")
+    Call<SnoozeUsers> postStream(@Query("access_token") String key, @Query("options") String options);
+
+    @GET("SnoozeUsers/confirm")
+    Call<List<SnoozeUsers>> confirmRegistration(@Query("uid") String uid, @Query("token") String token, @Query("access_token") String key);
+
+    @GET("SnoozeUsers/GetUserData")
+    Call<List<SnoozeUsers>> getUserData(@Query("access_token") String key);
+
+    /* LOGIN / LOGOUT / RESET / PW */
+    @POST("SnoozeUsers/login")
+    Call<SnoozeUsers> login(@Query("access_token") String key, @Body Credentials creds);
+
+    @POST("SnoozeUsers/logout")
+    Call<SnoozeUsers> logout(@Query("access_token") String key);
 }
