@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.snooze">
+    package="com.snooze.snooze">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -11,13 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AboutSnooze"></activity>
-        <activity android:name=".Settings" />
-        <activity android:name=".Maps" />
-        <activity android:name=".Menu" />
-        <activity android:name=".Register" />
-        <activity android:name=".LogIn" />
-        <activity android:name=".MainActivity">
+        <activity android:name="com.snooze.snooze.AboutSnooze"></activity>
+        <activity android:name="com.snooze.snooze.Settings" />
+        <activity android:name="com.snooze.snooze.Maps" />
+        <activity android:name="com.snooze.snooze.Menu" />
+        <activity android:name="com.snooze.snooze.Register" />
+        <activity android:name="com.snooze.snooze.LogIn" />
+        <activity android:name="com.snooze.snooze.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
