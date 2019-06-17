@@ -21,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
         Intent i = new Intent(this,LogIn.class);
         startActivity(i);
 
+
+        System.out.println("in main activity");
+
         /* CONNECTION TO API */
         ApiConnector connect = new ApiConnector();
         retrofit = connect.getRetrofitInstance();

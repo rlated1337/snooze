@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.snooze.api.snooze.inc.SnoozeUsers;
 
 import com.snooze.model.snooze.controller.UserController;
 
@@ -17,14 +20,14 @@ public class Register extends AppCompatActivity {
     private EditText edtEmail;
     private EditText edtPassword;
     private EditText edtPasswordCheck;
-
-    UserController ucontroller = new UserController();
-
+    private UserController ucontroller;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        ucontroller = new UserController();
 
         btnRegister = findViewById(R.id.btn_Register_Register);
         btnAboutSnooze = findViewById(R.id.btn_Register_AboutSnooze);
@@ -48,7 +51,24 @@ public class Register extends AppCompatActivity {
                 String email = edtEmail.getText().toString();
                 String password = edtPassword.getText().toString();
 
+                System.out.println("Username: " + username + " Email: " + email + " PW: " + password);
+
+
+                ucontroller.setOnDataListener(new UserController.DataInterface() {
+                    @Override
+                    public void responseData(String myResponse) {
+                        System.out.println(myResponse);
+
+                        if(myResponse.equals("OK")){
+                            Toast.makeText(Register.this, "Successfully Registered", Toast.LENGTH_SHORT).show();
+                            
+                        }
+                    }
+                });
+
                 ucontroller.register(username,email,password);
+
+
 
             }
         });
@@ -60,5 +80,6 @@ public class Register extends AppCompatActivity {
         startActivity(i);
 
     }
+
 
 }

@@ -14,11 +14,12 @@ import retrofit2.Retrofit;
 public class UserController {
     private UserService userservice;
     private User user;
-
     private Retrofit retrofit;
     private SnoozeUsersService service;
     private ApiConnector connect;
     private static final String accessToken = "VuBQEphnpyJ21kjHRCDsDtvJOCA2ULzhUDkGi4nIyOK0HxD7z7qVTEVRBynlzD6M";
+    private String userAccessToken;
+    private DataInterface mListener;
 
     public UserController() {
         /* CONNECTION TO API */
@@ -39,6 +40,14 @@ public class UserController {
                     System.out.println("Code: " + response.code());
                     System.out.println("Message: " + response.message());
                 }
+
+                if (response!=null && response.body() != null && mListener != null) {
+                    mListener.responseData(response.message());
+                    createUserAccessToken();
+                }
+
+
+
             }
 
             @Override
@@ -69,4 +78,18 @@ public class UserController {
     public void userLockOut(){
 
     }
+
+    public void createUserAccessToken(){
+        System.out.println("should create user acc token");
+    }
+
+    public void setOnDataListener(DataInterface listener) {
+        mListener = listener;
+    }
+
+    public interface DataInterface {
+        void responseData( String myResponse );
+    }
+
+
 }
