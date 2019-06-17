@@ -103,7 +103,7 @@ public class UserController {
                         obj.put("id", response.body().getId());
                         obj.put("ttl", response.body().getTtl());
                         obj.put("created", response.body().getCreated());
-                        obj.put("userId", response.body().getId());
+                        obj.put("userId", response.body().getUserId());
                     }
                     catch (JSONException e){
                         e.printStackTrace();
