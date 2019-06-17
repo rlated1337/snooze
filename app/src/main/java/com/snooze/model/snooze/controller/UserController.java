@@ -71,7 +71,22 @@ public class UserController {
     }
 
     public void login(String email, String password){
-        Credentials creds = new Credentials(email,password);
+        String username = "";
+
+        if(email.contains("@stud.fra-uas.de")){
+            // WILL PER EMAIL ANMELDEN
+            username = email;
+        }
+        else {
+            // WILL PER USERNAME ANMELDEN
+            username = email;
+            email = "";
+        }
+
+        Credentials creds = new Credentials(email, username, password);
+        
+        final String respUsername = username;
+        final String respPassword = password;
 
         Call<Session> call = service.login(accessToken,creds);
 
@@ -91,6 +106,10 @@ public class UserController {
                         obj.put("ttl", response.body().getTtl());
                         obj.put("created", response.body().getCreated());
                         obj.put("userId", response.body().getUserId());
+                        obj.put("username", respUsername);
+                        obj.put("password", respPassword);
+
+
                     }
                     catch (JSONException e){
                         e.printStackTrace();

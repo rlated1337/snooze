@@ -7,13 +7,17 @@ public class Credentials {
     @SerializedName("email")
     private String email;
 
+    @SerializedName("username")
+    private String username;
+
     @SerializedName("password")
     private String password;
 
 
-    public Credentials(String email, String password) {
+    public Credentials(String email, String username, String password) {
         this.email = email;
         this.password = password;
+        this.username = username;
     }
 
     public String getUsername() {
@@ -30,5 +34,13 @@ public class Credentials {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }
