@@ -2,6 +2,7 @@ package com.snooze.model.snooze.controller;
 
 import com.snooze.api.snooze.ApiConnector;
 import com.snooze.api.snooze.SnoozeUsersService;
+import com.snooze.api.snooze.inc.Credentials;
 import com.snooze.api.snooze.inc.SnoozeUsers;
 import com.snooze.model.snooze.User;
 import com.snooze.model.snooze.service.UserService;
@@ -17,7 +18,7 @@ public class UserController {
     private Retrofit retrofit;
     private SnoozeUsersService service;
     private ApiConnector connect;
-    private static final String accessToken = "VuBQEphnpyJ21kjHRCDsDtvJOCA2ULzhUDkGi4nIyOK0HxD7z7qVTEVRBynlzD6M";
+    private static final String accessToken = "f4D7ZtPZwGG4COl4OUhHnVpIiBHDCFLHd4SWHdLfV7iVGTSZ42DQAv2DCsEpvJcK";
     private String userAccessToken;
     private DataInterface mListener;
 
@@ -59,12 +60,34 @@ public class UserController {
 
     }
 
-    public void register(){
+    public void login(String email, String password){
+        Credentials creds = new Credentials(email,password);
+        
+        Call<SnoozeUsers> call = service.login(accessToken,creds);
 
-    }
+        call.enqueue(new Callback<SnoozeUsers>() {
+            @Override
+            public void onResponse(Call<SnoozeUsers> call, Response<SnoozeUsers> response) {
+                if(!response.isSuccessful()){
+                    System.out.println("Code: " + response.code());
+                    System.out.println("Message: " + response.message());
+                }
 
-    public void login(){
+                if (response!=null && response.body() != null && mListener != null) {
+                    mListener.responseData(response.message());
+                    createUserAccessToken();
+                }
 
+
+
+            }
+
+            @Override
+            public void onFailure(Call<SnoozeUsers> call, Throwable t) {
+                System.out.println(t.getMessage());
+
+            }
+        });
     }
 
     public void executePayment(){
