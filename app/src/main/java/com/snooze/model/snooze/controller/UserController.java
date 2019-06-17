@@ -3,9 +3,15 @@ package com.snooze.model.snooze.controller;
 import com.snooze.api.snooze.ApiConnector;
 import com.snooze.api.snooze.SnoozeUsersService;
 import com.snooze.api.snooze.inc.Credentials;
+import com.snooze.api.snooze.inc.Session;
 import com.snooze.api.snooze.inc.SnoozeUsers;
 import com.snooze.model.snooze.User;
 import com.snooze.model.snooze.service.UserService;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.sql.SQLOutput;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -18,7 +24,7 @@ public class UserController {
     private Retrofit retrofit;
     private SnoozeUsersService service;
     private ApiConnector connect;
-    private static final String accessToken = "f4D7ZtPZwGG4COl4OUhHnVpIiBHDCFLHd4SWHdLfV7iVGTSZ42DQAv2DCsEpvJcK";
+    private static final String accessToken = "GN0tME3nUBa6auETCDju80cAzMSMDaDY791UafudXydp6AwwLfVjEJDDxJTjHEg3";
     private String userAccessToken;
     private DataInterface mListener;
 
@@ -43,8 +49,12 @@ public class UserController {
                 }
 
                 if (response!=null && response.body() != null && mListener != null) {
-                    mListener.responseData(response.message());
-                    createUserAccessToken();
+
+                    createUserAccessToken(String.valueOf(response.body().getId()), response.body());
+
+
+
+
                 }
 
 
@@ -61,29 +71,57 @@ public class UserController {
     }
 
     public void login(String email, String password){
-        Credentials creds = new Credentials(email,password);
-        
-        Call<SnoozeUsers> call = service.login(accessToken,creds);
+        String username = "";
 
-        call.enqueue(new Callback<SnoozeUsers>() {
+        if(email.contains("@stud.fra-uas.de")){
+            // WILL PER EMAIL ANMELDEN
+            username = email;
+        }
+        else {
+            // WILL PER USERNAME ANMELDEN
+            username = email;
+            email = "";
+        }
+
+        Credentials creds = new Credentials(email, username, password);
+        
+        final String respUsername = username;
+        final String respPassword = password;
+
+        Call<Session> call = service.login(accessToken,creds);
+
+        call.enqueue(new Callback<Session>() {
             @Override
-            public void onResponse(Call<SnoozeUsers> call, Response<SnoozeUsers> response) {
+            public void onResponse(Call<Session> call, Response<Session> response) {
                 if(!response.isSuccessful()){
                     System.out.println("Code: " + response.code());
                     System.out.println("Message: " + response.message());
                 }
 
                 if (response!=null && response.body() != null && mListener != null) {
-                    mListener.responseData(response.message());
-                    createUserAccessToken();
+                    JSONObject obj = new JSONObject();
+
+                    try {
+                        obj.put("id", response.body().getId());
+                        obj.put("ttl", response.body().getTtl());
+                        obj.put("created", response.body().getCreated());
+                        obj.put("userId", response.body().getUserId());
+                        obj.put("username", respUsername);
+                        obj.put("password", respPassword);
+
+
+                    }
+                    catch (JSONException e){
+                        e.printStackTrace();
+                    }
+
+                    mListener.responseData(obj);
+
                 }
-
-
-
             }
 
             @Override
-            public void onFailure(Call<SnoozeUsers> call, Throwable t) {
+            public void onFailure(Call<Session> call, Throwable t) {
                 System.out.println(t.getMessage());
 
             }
@@ -102,8 +140,48 @@ public class UserController {
 
     }
 
-    public void createUserAccessToken(){
-        System.out.println("should create user acc token");
+    public void createUserAccessToken(final String userID, final SnoozeUsers user){
+        System.out.println("Creating User Access Token");
+
+        Call<Session> call = service.postAccessToken(userID,accessToken);
+
+        call.enqueue(new Callback<Session>() {
+            @Override
+            public void onResponse(Call<Session> call, Response<Session> response) {
+                if(!response.isSuccessful()){
+                    System.out.println("Code: " + response.code());
+                    System.out.println("Message: " + response.message());
+                }
+
+                if (response!=null && response.body() != null && mListener != null) {
+                    System.out.println("ACC TOKEN SUCCESFULLY CREATED");
+                    userAccessToken = response.body().getId();
+
+                    JSONObject obj = new JSONObject();
+                    try {
+                        obj.put("userId", user.getId());
+                        obj.put("realm", user.getRealm());
+                        obj.put("username", user.getUsername());
+                        obj.put("email", user.getEmail());
+                        obj.put("emailVerified", user.getEmailVerified());
+                        obj.put("id", userAccessToken);
+                    }
+                    catch (JSONException e){
+                        e.printStackTrace();
+                    }
+
+                    mListener.responseData(obj);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Session> call, Throwable t) {
+                System.out.println(t.getMessage());
+
+            }
+        });
+
+
     }
 
     public void setOnDataListener(DataInterface listener) {
@@ -111,7 +189,7 @@ public class UserController {
     }
 
     public interface DataInterface {
-        void responseData( String myResponse );
+        void responseData( JSONObject myResponse );
     }
 
 

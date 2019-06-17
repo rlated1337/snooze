@@ -6,13 +6,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.snooze.api.snooze.inc.Session;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class Menu extends AppCompatActivity {
     private Button btnBack;
     private Button btnMaps;
     private Button btnAccount;
     private Button btnBookings;
     private Button btnSettings;
-
+    private Session session;
+    private JSONObject json_object;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +42,21 @@ public class Menu extends AppCompatActivity {
                 switchScreens(Maps.class);
             }
         });
+
+        System.out.println(getIntent().getStringExtra("ACC_TOKEN"));
+
+        try {
+            json_object = new JSONObject(getIntent().getStringExtra("ACC_TOKEN"));
+            System.out.println(json_object.getString("id"));
+            System.out.println(json_object.getString("userId"));
+            System.out.println(json_object.getString("username"));
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+
 
 
     }
