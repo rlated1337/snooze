@@ -36,7 +36,7 @@ public class UserController {
     }
 
     public void register(String username, String email, String password){
-        SnoozeUsers snoozeUser = new SnoozeUsers("FH",username,email,true ,password);
+        SnoozeUsers snoozeUser = new SnoozeUsers("FH",username,email,false ,password);
 
         Call<SnoozeUsers> call = service.postNewUser(accessToken,snoozeUser);
 
@@ -50,8 +50,19 @@ public class UserController {
 
                 if (response!=null && response.body() != null && mListener != null) {
 
-                    createUserAccessToken(String.valueOf(response.body().getId()), response.body());
+                    JSONObject obj = new JSONObject();
+                    try {
+                        obj.put("userId", response.body().getId());
+                        obj.put("realm", response.body().getRealm());
+                        obj.put("username", response.body().getUsername());
+                        obj.put("email", response.body().getEmail());
+                        obj.put("emailVerified", response.body().getEmailVerified());
+                    }
+                    catch (JSONException e){
+                        e.printStackTrace();
+                    }
 
+                    mListener.responseData(obj);
 
 
 
@@ -84,7 +95,7 @@ public class UserController {
         }
 
         Credentials creds = new Credentials(email, username, password);
-        
+
         final String respUsername = username;
         final String respPassword = password;
 
@@ -137,50 +148,6 @@ public class UserController {
     }
 
     public void userLockOut(){
-
-    }
-
-    public void createUserAccessToken(final String userID, final SnoozeUsers user){
-        System.out.println("Creating User Access Token");
-
-        Call<Session> call = service.postAccessToken(userID,accessToken);
-
-        call.enqueue(new Callback<Session>() {
-            @Override
-            public void onResponse(Call<Session> call, Response<Session> response) {
-                if(!response.isSuccessful()){
-                    System.out.println("Code: " + response.code());
-                    System.out.println("Message: " + response.message());
-                }
-
-                if (response!=null && response.body() != null && mListener != null) {
-                    System.out.println("ACC TOKEN SUCCESFULLY CREATED");
-                    userAccessToken = response.body().getId();
-
-                    JSONObject obj = new JSONObject();
-                    try {
-                        obj.put("userId", user.getId());
-                        obj.put("realm", user.getRealm());
-                        obj.put("username", user.getUsername());
-                        obj.put("email", user.getEmail());
-                        obj.put("emailVerified", user.getEmailVerified());
-                        obj.put("id", userAccessToken);
-                    }
-                    catch (JSONException e){
-                        e.printStackTrace();
-                    }
-
-                    mListener.responseData(obj);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Session> call, Throwable t) {
-                System.out.println(t.getMessage());
-
-            }
-        });
-
 
     }
 

@@ -62,8 +62,11 @@ public class Register extends AppCompatActivity {
                         System.out.println(myResponse);
 
                         if(myResponse.length() > 0){
-                            Toast.makeText(Register.this, "Successfully Registered", Toast.LENGTH_SHORT).show();
-                            switchScreens(Menu.class, myResponse);
+                            Toast.makeText(Register.this, "Successfully Registered - Please confirm Email and Login", Toast.LENGTH_SHORT).show();
+
+                            switchScreens(LogIn.class, myResponse);
+
+                            //  switchScreens(Menu.class, myResponse);
                         }
                     }
                 });
