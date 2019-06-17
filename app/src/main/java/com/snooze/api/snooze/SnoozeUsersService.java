@@ -2,9 +2,12 @@ package com.snooze.api.snooze;
 
 import com.snooze.api.snooze.inc.Bookings;
 import com.snooze.api.snooze.inc.Credentials;
+import com.snooze.api.snooze.inc.Session;
 import com.snooze.api.snooze.inc.SnoozeUsers;
 import com.snooze.api.snooze.inc.CapsulePreferences;
 
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -102,7 +105,7 @@ public interface SnoozeUsersService {
 
     /* LOGIN / LOGOUT / RESET / PW */
     @POST("SnoozeUsers/login")
-    Call<SnoozeUsers> login(@Query("access_token") String key, @Body Credentials creds);
+    Call<Session> login(@Query("access_token") String key, @Body Credentials creds);
 
     @POST("SnoozeUsers/logout")
     Call<SnoozeUsers> logout(@Query("access_token") String key);

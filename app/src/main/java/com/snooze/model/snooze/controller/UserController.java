@@ -3,9 +3,12 @@ package com.snooze.model.snooze.controller;
 import com.snooze.api.snooze.ApiConnector;
 import com.snooze.api.snooze.SnoozeUsersService;
 import com.snooze.api.snooze.inc.Credentials;
+import com.snooze.api.snooze.inc.Session;
 import com.snooze.api.snooze.inc.SnoozeUsers;
 import com.snooze.model.snooze.User;
 import com.snooze.model.snooze.service.UserService;
+
+import org.json.JSONObject;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -62,12 +65,12 @@ public class UserController {
 
     public void login(String email, String password){
         Credentials creds = new Credentials(email,password);
-        
-        Call<SnoozeUsers> call = service.login(accessToken,creds);
 
-        call.enqueue(new Callback<SnoozeUsers>() {
+        Call<Session> call = service.login(accessToken,creds);
+
+        call.enqueue(new Callback<Session>() {
             @Override
-            public void onResponse(Call<SnoozeUsers> call, Response<SnoozeUsers> response) {
+            public void onResponse(Call<Session> call, Response<Session> response) {
                 if(!response.isSuccessful()){
                     System.out.println("Code: " + response.code());
                     System.out.println("Message: " + response.message());
@@ -83,7 +86,7 @@ public class UserController {
             }
 
             @Override
-            public void onFailure(Call<SnoozeUsers> call, Throwable t) {
+            public void onFailure(Call<Session> call, Throwable t) {
                 System.out.println(t.getMessage());
 
             }
