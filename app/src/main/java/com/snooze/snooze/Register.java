@@ -1,5 +1,6 @@
 package com.snooze.snooze;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -25,15 +26,15 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        edtUserName = findViewById(R.id.edt_Register_Firstname);
-        edtEmail = findViewById(R.id.edt_Register_Email);
-        edtPassword = findViewById(R.id.edt_Register_Password);
-
         btnRegister = findViewById(R.id.btn_Register_Register);
+        btnAboutSnooze = findViewById(R.id.btn_Register_AboutSnooze);
+        btnBack = findViewById(R.id.btn_Register_back);
+        edtUserName = findViewById(R.id.edt_Register_Username);
+        edtEmail = findViewById(R.id.edt_Register_Email);
+        edtPassword  = findViewById(R.id.edt_Register_Password);
+        edtPasswordCheck = findViewById(R.id.edt_Register_PasswordCheck);
 
-        Button btn_Back = findViewById(R.id.btn_Register_back);
-
-        btn_Back.setOnClickListener(new View.OnClickListener() {
+        btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -52,4 +53,12 @@ public class Register extends AppCompatActivity {
             }
         });
     }
+
+    public void switchScreens(Class s)
+    {
+        Intent i = new Intent(this,s);
+        startActivity(i);
+
+    }
+
 }
