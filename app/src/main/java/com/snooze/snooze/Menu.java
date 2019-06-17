@@ -43,6 +43,7 @@ public class Menu extends AppCompatActivity {
             json_object = new JSONObject(getIntent().getStringExtra("ACC_TOKEN"));
             System.out.println(json_object.getString("id"));
             System.out.println(json_object.getString("userId"));
+            System.out.println(json_object.getString("username"));
 
         } catch (JSONException e) {
             e.printStackTrace();

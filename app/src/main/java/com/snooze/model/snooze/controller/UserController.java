@@ -50,23 +50,10 @@ public class UserController {
 
                 if (response!=null && response.body() != null && mListener != null) {
 
-                    JSONObject obj = new JSONObject();
-                    createUserAccessToken(String.valueOf(response.body().getId()));
+                    createUserAccessToken(String.valueOf(response.body().getId()), response.body());
 
 
-                    try {
-                        obj.put("id", response.body().getId());
-                        obj.put("realm", response.body().getRealm());
-                        obj.put("username", response.body().getUsername());
-                        obj.put("email", response.body().getEmail());
-                        obj.put("emailVerified", response.body().getEmailVerified());
-                        obj.put("accToken", userAccessToken);
-                    }
-                    catch (JSONException e){
-                        e.printStackTrace();
-                    }
 
-                    mListener.responseData(obj);
 
                 }
 
@@ -134,7 +121,7 @@ public class UserController {
 
     }
 
-    public void createUserAccessToken(final String userID){
+    public void createUserAccessToken(final String userID, final SnoozeUsers user){
         System.out.println("Creating User Access Token");
 
         Call<Session> call = service.postAccessToken(userID,accessToken);
@@ -150,6 +137,21 @@ public class UserController {
                 if (response!=null && response.body() != null && mListener != null) {
                     System.out.println("ACC TOKEN SUCCESFULLY CREATED");
                     userAccessToken = response.body().getId();
+
+                    JSONObject obj = new JSONObject();
+                    try {
+                        obj.put("userId", user.getId());
+                        obj.put("realm", user.getRealm());
+                        obj.put("username", user.getUsername());
+                        obj.put("email", user.getEmail());
+                        obj.put("emailVerified", user.getEmailVerified());
+                        obj.put("id", userAccessToken);
+                    }
+                    catch (JSONException e){
+                        e.printStackTrace();
+                    }
+
+                    mListener.responseData(obj);
                 }
             }
 

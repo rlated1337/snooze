@@ -60,13 +60,16 @@ public class LogIn extends AppCompatActivity {
         });
 
         btnRegister.setOnClickListener(new View.OnClickListener() {
+            JSONObject obj = new JSONObject();
+
             @Override
             public void onClick(View v) {
-                switchScreens(Register.class, null);
+                switchScreens(Register.class, obj);
             }
         });
 
         btnInfo.setOnClickListener(new View.OnClickListener() {
+            JSONObject obj = new JSONObject();
             @Override
             public void onClick(View v) {
                 switchScreens(AboutSnooze.class, null);
