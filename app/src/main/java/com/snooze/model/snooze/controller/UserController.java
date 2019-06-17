@@ -8,7 +8,10 @@ import com.snooze.api.snooze.inc.SnoozeUsers;
 import com.snooze.model.snooze.User;
 import com.snooze.model.snooze.service.UserService;
 
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.sql.SQLOutput;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,7 +24,7 @@ public class UserController {
     private Retrofit retrofit;
     private SnoozeUsersService service;
     private ApiConnector connect;
-    private static final String accessToken = "f4D7ZtPZwGG4COl4OUhHnVpIiBHDCFLHd4SWHdLfV7iVGTSZ42DQAv2DCsEpvJcK";
+    private static final String accessToken = "GN0tME3nUBa6auETCDju80cAzMSMDaDY791UafudXydp6AwwLfVjEJDDxJTjHEg3";
     private String userAccessToken;
     private DataInterface mListener;
 
@@ -46,8 +49,25 @@ public class UserController {
                 }
 
                 if (response!=null && response.body() != null && mListener != null) {
-                    mListener.responseData(response.message());
-                    createUserAccessToken();
+
+                    JSONObject obj = new JSONObject();
+                    createUserAccessToken(String.valueOf(response.body().getId()));
+
+
+                    try {
+                        obj.put("id", response.body().getId());
+                        obj.put("realm", response.body().getRealm());
+                        obj.put("username", response.body().getUsername());
+                        obj.put("email", response.body().getEmail());
+                        obj.put("emailVerified", response.body().getEmailVerified());
+                        obj.put("accToken", userAccessToken);
+                    }
+                    catch (JSONException e){
+                        e.printStackTrace();
+                    }
+
+                    mListener.responseData(obj);
+
                 }
 
 
@@ -77,12 +97,21 @@ public class UserController {
                 }
 
                 if (response!=null && response.body() != null && mListener != null) {
-                    mListener.responseData(response.message());
-                    createUserAccessToken();
+                    JSONObject obj = new JSONObject();
+
+                    try {
+                        obj.put("id", response.body().getId());
+                        obj.put("ttl", response.body().getTtl());
+                        obj.put("created", response.body().getCreated());
+                        obj.put("userId", response.body().getId());
+                    }
+                    catch (JSONException e){
+                        e.printStackTrace();
+                    }
+
+                    mListener.responseData(obj);
+
                 }
-
-
-
             }
 
             @Override
@@ -105,8 +134,33 @@ public class UserController {
 
     }
 
-    public void createUserAccessToken(){
-        System.out.println("should create user acc token");
+    public void createUserAccessToken(final String userID){
+        System.out.println("Creating User Access Token");
+
+        Call<Session> call = service.postAccessToken(userID,accessToken);
+
+        call.enqueue(new Callback<Session>() {
+            @Override
+            public void onResponse(Call<Session> call, Response<Session> response) {
+                if(!response.isSuccessful()){
+                    System.out.println("Code: " + response.code());
+                    System.out.println("Message: " + response.message());
+                }
+
+                if (response!=null && response.body() != null && mListener != null) {
+                    System.out.println("ACC TOKEN SUCCESFULLY CREATED");
+                    userAccessToken = response.body().getId();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Session> call, Throwable t) {
+                System.out.println(t.getMessage());
+
+            }
+        });
+
+
     }
 
     public void setOnDataListener(DataInterface listener) {
@@ -114,7 +168,7 @@ public class UserController {
     }
 
     public interface DataInterface {
-        void responseData( String myResponse );
+        void responseData( JSONObject myResponse );
     }
 
 

@@ -7,6 +7,8 @@ public class Session {
     private String created;
     private String userId;
 
+    public Session() {}
+
     public Session(String id, String ttl, String created, String userId) {
         this.id = id;
         this.ttl = ttl;

@@ -12,6 +12,8 @@ import com.snooze.api.snooze.inc.SnoozeUsers;
 
 import com.snooze.model.snooze.controller.UserController;
 
+import org.json.JSONObject;
+
 public class Register extends AppCompatActivity {
     private Button btnBack;
     private Button btnRegister;
@@ -56,12 +58,12 @@ public class Register extends AppCompatActivity {
 
                 ucontroller.setOnDataListener(new UserController.DataInterface() {
                     @Override
-                    public void responseData(String myResponse) {
+                    public void responseData(JSONObject myResponse) {
                         System.out.println(myResponse);
 
-                        if(myResponse.equals("OK")){
+                        if(myResponse.length() > 0){
                             Toast.makeText(Register.this, "Successfully Registered", Toast.LENGTH_SHORT).show();
-                            switchScreens(Menu.class);
+                            switchScreens(Menu.class, myResponse);
                         }
                     }
                 });
@@ -78,9 +80,10 @@ public class Register extends AppCompatActivity {
 
     }
 
-    public void switchScreens(Class s)
+    public void switchScreens(Class s, JSONObject obj)
     {
         Intent i = new Intent(this,s);
+        i.putExtra("ACC_TOKEN", obj.toString());
         startActivity(i);
 
     }

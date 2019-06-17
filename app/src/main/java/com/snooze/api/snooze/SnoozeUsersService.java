@@ -44,7 +44,7 @@ public interface SnoozeUsersService {
     Call<List<SnoozeUsers>> getAccessToken(@Path("id") String id, @Query("access_token") String key);
 
     @POST("SnoozeUsers/{id}/accessTokens")
-    Call<SnoozeUsers> postAccessToken(@Path("id") String id, @Query("access_token") String key, @Query("data") String jsonData);
+    Call<Session> postAccessToken(@Path("id") String id, @Query("access_token") String key);
 
     @DELETE("SnoozeUsers/{id}/accessTokens")
     Call<Void> deleteAccessToken(@Path("id") String id, @Query("access_token") String key);

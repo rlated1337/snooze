@@ -6,13 +6,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.snooze.api.snooze.inc.Session;
+
 public class Menu extends AppCompatActivity {
     private Button btnBack;
     private Button btnMaps;
     private Button btnAccount;
     private Button btnBookings;
     private Button btnSettings;
-
+    private Session session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +32,10 @@ public class Menu extends AppCompatActivity {
                 switchScreens(AboutSnooze.class);
             }
         });
+
+        session = new Session();
+        System.out.println(session.getId());
+
 
 
     }

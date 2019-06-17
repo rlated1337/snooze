@@ -10,6 +10,8 @@ import android.widget.Toast;
 
 import com.snooze.model.snooze.controller.UserController;
 
+import org.json.JSONObject;
+
 public class LogIn extends AppCompatActivity {
 
     private Button btnLogIn;
@@ -41,12 +43,12 @@ public class LogIn extends AppCompatActivity {
 
                 ucontroller.setOnDataListener(new UserController.DataInterface() {
                     @Override
-                    public void responseData(String myResponse) {
+                    public void responseData(JSONObject myResponse) {
                         System.out.println(myResponse);
 
-                        if(myResponse.equals("OK")){
+                        if(myResponse.length() > 0){
                             Toast.makeText(LogIn.this, "Success", Toast.LENGTH_SHORT).show();
-                            switchScreens(Menu.class);
+                            switchScreens(Menu.class, myResponse);
                         }
                     }
                 });
@@ -60,26 +62,23 @@ public class LogIn extends AppCompatActivity {
         btnRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchScreens(Register.class);
+                switchScreens(Register.class, null);
             }
         });
 
         btnInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchScreens(AboutSnooze.class);
+                switchScreens(AboutSnooze.class, null);
             }
         });
-
-
-
-
     }
 
 
-    public void switchScreens(Class s)
+    public void switchScreens(Class s, JSONObject obj)
     {
         Intent i = new Intent(this,s);
+        i.putExtra("ACC_TOKEN", obj.toString());
         startActivity(i);
 
     }
