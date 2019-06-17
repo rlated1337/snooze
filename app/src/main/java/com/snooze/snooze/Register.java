@@ -22,13 +22,13 @@ public class Register extends AppCompatActivity {
     private EditText edtPasswordCheck;
     private UserController ucontroller;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
         ucontroller = new UserController();
-
         btnRegister = findViewById(R.id.btn_Register_Register);
         btnAboutSnooze = findViewById(R.id.btn_Register_AboutSnooze);
         btnBack = findViewById(R.id.btn_Register_back);
@@ -61,10 +61,12 @@ public class Register extends AppCompatActivity {
 
                         if(myResponse.equals("OK")){
                             Toast.makeText(Register.this, "Successfully Registered", Toast.LENGTH_SHORT).show();
-                            
+                            switchScreens(Menu.class);
                         }
                     }
                 });
+
+
 
                 ucontroller.register(username,email,password);
 
@@ -72,6 +74,8 @@ public class Register extends AppCompatActivity {
 
             }
         });
+
+
     }
 
     public void switchScreens(Class s)
@@ -80,6 +84,7 @@ public class Register extends AppCompatActivity {
         startActivity(i);
 
     }
+
 
 
 }
