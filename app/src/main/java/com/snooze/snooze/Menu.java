@@ -30,12 +30,19 @@ public class Menu extends AppCompatActivity {
                 switchScreens(AboutSnooze.class);
             }
         });
+        btnMaps.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchScreens(Maps.class);
+            }
+        });
 
 
     }
     public void switchScreens(Class s)
     {
         Intent i = new Intent(this,s);
+
         startActivity(i);
 
     }
