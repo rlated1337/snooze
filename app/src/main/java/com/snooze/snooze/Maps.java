@@ -13,6 +13,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -29,8 +31,7 @@ import com.snooze.api.snooze.inc.Capsules;
 import com.snooze.model.snooze.controller.AppController;
 import com.snooze.model.snooze.controller.UserController;
 
-import org.json.JSONObject;
-
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -47,7 +48,10 @@ public class Maps extends AppCompatActivity implements
     private Marker currentUserLocationMarker;
     private static final int Request_User_Location_Code =99;
     private AppController aController;
-    private List<Capsules> capsules;
+    private List<Capsules> listCapsules = new ArrayList<Capsules>();
+    private TextView textView4;
+    private ScrollView scrollView;
+
 
 
     @Override
@@ -55,6 +59,7 @@ public class Maps extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         aController = MainActivity.getInstance().getaController();
+        textView4 = findViewById(R.id.textView4);
 
         System.out.println(aController);
 
@@ -62,14 +67,13 @@ public class Maps extends AppCompatActivity implements
 
         aController.setOnDataListener(new AppController.DataInterface2() {
             @Override
-            public void responseData(List<Capsules> capsules2) {
+            public void responseData(List<Capsules> capsules) {
                 System.out.println(capsules);
-
-                capsules = capsules2;
-
+                listCapsules = capsules;
                 if(capsules.get(0) != null){
                     Toast.makeText(Maps.this, "Success", Toast.LENGTH_SHORT).show();
                 }
+                printCapsuleList();
             }
         });
 
@@ -192,6 +196,16 @@ public class Maps extends AppCompatActivity implements
     public void showCapsuleList(){
         aController.showCapsules();
     }
+    public void printCapsuleList(){
+        for(Capsules capsule : listCapsules){
+            String content = "";
+            content += "Name: " + capsule.getName() + "\n";
+            content += capsule.getIpAddress() + "\n";
+            content += "Preis: " + capsule.getPrice() + "\n";
+            content += "________________________" + "\n";
 
+            textView4.append(content);
+        }
+    }
 
 }
