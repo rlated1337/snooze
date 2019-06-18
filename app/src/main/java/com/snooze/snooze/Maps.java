@@ -10,6 +10,8 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -18,10 +20,13 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.snooze.model.snooze.controller.AppController;
+
+
 
 public class Maps extends AppCompatActivity implements
         OnMapReadyCallback {
@@ -45,14 +50,13 @@ public class Maps extends AppCompatActivity implements
         setContentView(R.layout.activity_maps);
         aController = MainActivity.getInstance().getaController();
 
+        Toolbar tb = findViewById(R.id.toolbar);
+        setSupportActionBar(tb);
+        tb.setSubtitle("Your Location");
 
-        if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M)
-        {
-            checkUserLocationPermission();
-        }
-
-        showCapsuleList();
-
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
 
 
@@ -65,7 +69,7 @@ public class Maps extends AppCompatActivity implements
         enableMyLocationIfPermitted();
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        //mMap.setMinZoomPreference(100);
+        //mMap.setMinZoomPreference(11);
     }
 
     private void enableMyLocationIfPermitted() {
