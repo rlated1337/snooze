@@ -17,11 +17,13 @@ public class MainActivity extends AppCompatActivity {
     private Retrofit retrofit;
     private UserController uController;
     private AppController  aController;
+    static MainActivity actv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        actv = this;
 
         uController = new UserController();
 
@@ -42,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+    }
+
+    public static MainActivity getInstance(){
+        return actv;
     }
 
     public UserController getuController() {

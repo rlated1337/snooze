@@ -21,16 +21,13 @@ public class LogIn extends AppCompatActivity {
     private EditText edtEmail;
     private EditText edtPassword;
     private EditText edtInfoText;
-    private MainActivity actv;
     private UserController uController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
-        actv = new MainActivity();
-
-        uController = actv.getuController();
+        uController =  MainActivity.getInstance().getuController();
 
         btnLogIn = findViewById(R.id.btn_LogIn_LogIn);
         btnRegister = findViewById(R.id.btn_LogIn_Register);

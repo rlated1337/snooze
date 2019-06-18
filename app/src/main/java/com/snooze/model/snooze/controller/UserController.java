@@ -7,6 +7,7 @@ import com.snooze.api.snooze.inc.Session;
 import com.snooze.api.snooze.inc.SnoozeUsers;
 import com.snooze.model.snooze.User;
 import com.snooze.model.snooze.service.UserService;
+import com.snooze.snooze.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,12 +26,15 @@ public class UserController {
     private static final String accessToken = "GN0tME3nUBa6auETCDju80cAzMSMDaDY791UafudXydp6AwwLfVjEJDDxJTjHEg3";
     private String userAccessToken;
     private DataInterface mListener;
+    private AppController aController;
 
     public UserController() {
         /* CONNECTION TO API */
         connect = new ApiConnector();
         retrofit = connect.getRetrofitInstance();
         service = retrofit.create(SnoozeUsersService.class);
+        aController =  MainActivity.getInstance().getaController();
+
     }
 
     public void register(String username, String email, String password){

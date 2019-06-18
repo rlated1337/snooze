@@ -22,7 +22,6 @@ public class Register extends AppCompatActivity {
     private EditText edtEmail;
     private EditText edtPassword;
     private EditText edtPasswordCheck;
-    private MainActivity actv;
     private UserController uController;
 
 
@@ -30,10 +29,7 @@ public class Register extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-
-        actv = new MainActivity();
-
-        uController = actv.getuController();
+        uController =  MainActivity.getInstance().getuController();
 
         btnRegister = findViewById(R.id.btn_Register_Register);
         btnAboutSnooze = findViewById(R.id.btn_Register_AboutSnooze);

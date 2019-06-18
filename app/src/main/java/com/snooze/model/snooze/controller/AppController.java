@@ -19,15 +19,15 @@ public class AppController {
     private ApiConnector connect;
     private CapsuleService service;
     private String accessToken = "";
-    private MainActivity actv;
+
 
 
     public AppController() {
         connect = new ApiConnector();
         retrofit = connect.getRetrofitInstance();
         service = retrofit.create(CapsuleService.class);
-        actv = new MainActivity();
-        usercontroller = actv.getuController();
+
+        usercontroller =  MainActivity.getInstance().getuController();
 
         accessToken = usercontroller.getUserAccessToken();
         System.out.println("ACCESS TOKEN2: " + accessToken);
