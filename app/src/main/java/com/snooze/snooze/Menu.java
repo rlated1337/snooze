@@ -41,6 +41,12 @@ public class Menu extends AppCompatActivity {
                 switchScreens(Maps.class);
             }
         });
+        btnBookings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchScreens(Bookings.class);
+            }
+        });
 
         System.out.println(getIntent().getStringExtra("ACC_TOKEN"));
 /*
