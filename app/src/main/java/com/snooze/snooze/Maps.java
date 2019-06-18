@@ -4,15 +4,15 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -27,10 +27,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.snooze.api.snooze.inc.Capsules;
 import com.snooze.model.snooze.controller.AppController;
-import com.snooze.model.snooze.controller.UserController;
 
-import org.json.JSONObject;
-
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -47,6 +45,9 @@ public class Maps extends AppCompatActivity implements
     private Marker currentUserLocationMarker;
     private static final int Request_User_Location_Code =99;
     private AppController aController;
+    private List<Capsules> listCapsules = new ArrayList<Capsules>();
+    private TextView textView4;
+    private ScrollView scrollView;
 
 
 
@@ -55,6 +56,7 @@ public class Maps extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         aController = MainActivity.getInstance().getaController();
+        textView4 = findViewById(R.id.textView4);
 
         System.out.println(aController);
 
@@ -64,14 +66,15 @@ public class Maps extends AppCompatActivity implements
             @Override
             public void responseData(List<Capsules> capsules) {
                 System.out.println(capsules);
-
-
-
+                listCapsules = capsules;
                 if(capsules.get(0) != null){
                     Toast.makeText(Maps.this, "Success", Toast.LENGTH_SHORT).show();
                 }
+                printCapsuleList();
             }
+
         });
+
 
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
@@ -192,6 +195,16 @@ public class Maps extends AppCompatActivity implements
     public void showCapsuleList(){
         aController.showCapsules();
     }
+    public void printCapsuleList(){
+        for(Capsules capsule : listCapsules){
+            String content = "";
+            content += "Name: " + capsule.getName() + "\n";
+            content += capsule.getIpAddress() + "\n";
+            content += "Preis: " + capsule.getPrice() + "\n";
+            content += "________________________" + "\n";
 
+            textView4.append(content);
+        }
+    }
 
 }
