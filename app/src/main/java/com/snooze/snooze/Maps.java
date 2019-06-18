@@ -9,8 +9,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -20,26 +18,23 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 
+
+
 public class Maps extends AppCompatActivity implements
         OnMapReadyCallback {
+
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
     private GoogleMap mMap;
-    private Button btn_back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        btn_back.findViewById(R.id.btn_Maps_Back);
-        btn_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
-
+        Toolbar tb = findViewById(R.id.toolbar);
+        setSupportActionBar(tb);
+        tb.setSubtitle("Your Location");
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
@@ -56,7 +51,7 @@ public class Maps extends AppCompatActivity implements
         enableMyLocationIfPermitted();
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
-        //mMap.setMinZoomPreference(100);
+        //mMap.setMinZoomPreference(11);
     }
 
     private void enableMyLocationIfPermitted() {
@@ -76,8 +71,7 @@ public class Maps extends AppCompatActivity implements
         Toast.makeText(this, "Location permission not granted, " +
                         "showing default location",
                 Toast.LENGTH_SHORT).show();
-        LatLng redmond = new LatLng(50.11552, 8.68417);
-
+        LatLng redmond = new LatLng(47.6739881, -122.121512);
         mMap.moveCamera(CameraUpdateFactory.newLatLng(redmond));
     }
 
