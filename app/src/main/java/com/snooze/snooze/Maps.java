@@ -30,7 +30,6 @@ public class Maps extends AppCompatActivity implements
 
 
     private GoogleMap mMap;
-    private Button btnBack;
     private GoogleApiClient googleApiClient;
     private LocationRequest locationRequest;
     private Location lastLocation;
@@ -45,20 +44,13 @@ public class Maps extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         aController = new AppController();
-
+        aController.showCapsules();
 
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M)
         {
             checkUserLocationPermission();
         }
 
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
 
