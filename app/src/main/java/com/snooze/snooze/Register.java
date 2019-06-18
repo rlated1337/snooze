@@ -7,10 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.snooze.api.snooze.inc.SnoozeUsers;
+import com.snooze.snooze.MainActivity;
 
 import com.snooze.model.snooze.controller.UserController;
+
 
 import org.json.JSONObject;
 
@@ -22,7 +22,8 @@ public class Register extends AppCompatActivity {
     private EditText edtEmail;
     private EditText edtPassword;
     private EditText edtPasswordCheck;
-    private UserController ucontroller;
+    private MainActivity actv;
+    private UserController uController;
 
 
     @Override
@@ -30,7 +31,10 @@ public class Register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        ucontroller = new UserController();
+        actv = new MainActivity();
+
+        uController = actv.getuController();
+
         btnRegister = findViewById(R.id.btn_Register_Register);
         btnAboutSnooze = findViewById(R.id.btn_Register_AboutSnooze);
         btnBack = findViewById(R.id.btn_Register_back);
@@ -56,7 +60,7 @@ public class Register extends AppCompatActivity {
                 System.out.println("Username: " + username + " Email: " + email + " PW: " + password);
 
 
-                ucontroller.setOnDataListener(new UserController.DataInterface() {
+                uController.setOnDataListener(new UserController.DataInterface() {
                     @Override
                     public void responseData(JSONObject myResponse) {
                         System.out.println(myResponse);
@@ -73,7 +77,7 @@ public class Register extends AppCompatActivity {
 
 
 
-                ucontroller.register(username,email,password);
+                uController.register(username,email,password);
 
 
 

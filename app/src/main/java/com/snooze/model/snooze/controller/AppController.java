@@ -1,8 +1,10 @@
 package com.snooze.model.snooze.controller;
 
 import com.snooze.api.snooze.ApiConnector;
+import com.snooze.api.snooze.CapsulePreferencesService;
 import com.snooze.api.snooze.CapsuleService;
 import com.snooze.api.snooze.inc.Capsules;
+import com.snooze.snooze.MainActivity;
 
 import java.util.List;
 
@@ -17,13 +19,16 @@ public class AppController {
     private ApiConnector connect;
     private CapsuleService service;
     private String accessToken = "";
+    private MainActivity actv;
 
 
     public AppController() {
         connect = new ApiConnector();
         retrofit = connect.getRetrofitInstance();
         service = retrofit.create(CapsuleService.class);
-        usercontroller = new UserController();
+        actv = new MainActivity();
+        usercontroller = actv.getuController();
+
         accessToken = usercontroller.getUserAccessToken();
         System.out.println("ACCESS TOKEN2: " + accessToken);
     }

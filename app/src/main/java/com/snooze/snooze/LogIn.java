@@ -7,8 +7,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import com.snooze.snooze.MainActivity;
 import com.snooze.model.snooze.controller.UserController;
+
 
 import org.json.JSONObject;
 
@@ -20,14 +21,17 @@ public class LogIn extends AppCompatActivity {
     private EditText edtEmail;
     private EditText edtPassword;
     private EditText edtInfoText;
-    private UserController ucontroller;
+    private MainActivity actv;
+    private UserController uController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
+        actv = new MainActivity();
 
-        ucontroller = new UserController();
+        uController = actv.getuController();
+
         btnLogIn = findViewById(R.id.btn_LogIn_LogIn);
         btnRegister = findViewById(R.id.btn_LogIn_Register);
         btnInfo = findViewById(R.id.btn_LogIn_AboutSnooze);
@@ -41,7 +45,7 @@ public class LogIn extends AppCompatActivity {
                 String password = edtPassword.getText().toString();
 
 
-                ucontroller.setOnDataListener(new UserController.DataInterface() {
+                uController.setOnDataListener(new UserController.DataInterface() {
                     @Override
                     public void responseData(JSONObject myResponse) {
                         System.out.println(myResponse);
@@ -55,7 +59,7 @@ public class LogIn extends AppCompatActivity {
 
 
 
-                ucontroller.login(email,password);
+                uController.login(email,password);
             }
         });
 
