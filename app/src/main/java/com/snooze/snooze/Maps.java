@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -64,6 +65,8 @@ public class Maps extends AppCompatActivity implements
             public void responseData(List<Capsules> capsules) {
                 System.out.println(capsules);
 
+
+
                 if(capsules.get(0) != null){
                     Toast.makeText(Maps.this, "Success", Toast.LENGTH_SHORT).show();
                 }
@@ -90,6 +93,14 @@ public class Maps extends AppCompatActivity implements
 
         mMap.getUiSettings().setZoomControlsEnabled(true);
         //mMap.setMinZoomPreference(11);
+
+        // define point to center on
+        LatLng origin = new LatLng(50.13, 8.69);
+        CameraUpdate panToOrigin = CameraUpdateFactory.newLatLng(origin);
+        mMap.moveCamera(panToOrigin);
+
+        // set zoom level with animation
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(14), 400, null);
     }
 
     private void enableMyLocationIfPermitted() {

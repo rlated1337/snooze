@@ -52,22 +52,6 @@ public class AppController {
                 List<Capsules> capsules = response.body();
 
                 mListener.responseData(capsules);
-
-
-                for(Capsules capsule : capsules){
-                    String content = "";
-                    content += "Name: " + capsule.getName() + "\n";
-                    content += "Latitude: " + capsule.getLatitude() + "\n";
-                    content += "Longitude: " + capsule.getLongitude() + "\n";
-                    content += "IP-Address: " + capsule.getIpAddress() + "\n";
-                    content += "Price: " + capsule.getPrice() + "\n";
-                    content += "-----------" + "\n";
-
-                    System.out.println(content);
-
-
-                }
-
             }
 
             @Override
