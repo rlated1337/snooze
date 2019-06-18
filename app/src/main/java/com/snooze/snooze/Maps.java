@@ -4,12 +4,14 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -27,6 +29,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.snooze.api.snooze.inc.Capsules;
 import com.snooze.model.snooze.controller.AppController;
+import com.snooze.model.snooze.controller.UserController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,9 +75,7 @@ public class Maps extends AppCompatActivity implements
                 }
                 printCapsuleList();
             }
-
         });
-
 
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
@@ -98,12 +99,12 @@ public class Maps extends AppCompatActivity implements
         //mMap.setMinZoomPreference(11);
 
         // define point to center on
-        LatLng origin = new LatLng(50.13, 8.69);
+        LatLng origin = new LatLng(50.1299187, 8.6923254);
         CameraUpdate panToOrigin = CameraUpdateFactory.newLatLng(origin);
         mMap.moveCamera(panToOrigin);
 
         // set zoom level with animation
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(14), 400, null);
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 200, null);
     }
 
     private void enableMyLocationIfPermitted() {
