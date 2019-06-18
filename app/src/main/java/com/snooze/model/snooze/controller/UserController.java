@@ -11,8 +11,6 @@ import com.snooze.model.snooze.service.UserService;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.SQLOutput;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -127,8 +125,10 @@ public class UserController {
                     }
 
                     mListener.responseData(obj);
-
+                    setUserAccessToken(response.body().getId());
+                    System.out.println("ACCESS TOKEN: " + getUserAccessToken());
                 }
+
             }
 
             @Override
@@ -159,5 +159,11 @@ public class UserController {
         void responseData( JSONObject myResponse );
     }
 
+    public String getUserAccessToken() {
+        return userAccessToken;
+    }
 
+    public void setUserAccessToken(String userAccessToken) {
+        this.userAccessToken = userAccessToken;
+    }
 }
