@@ -47,7 +47,7 @@ public class Maps extends AppCompatActivity implements
     private Marker currentUserLocationMarker;
     private static final int Request_User_Location_Code =99;
     private AppController aController;
-
+    private List<Capsules> capsules;
 
 
     @Override
@@ -62,10 +62,10 @@ public class Maps extends AppCompatActivity implements
 
         aController.setOnDataListener(new AppController.DataInterface2() {
             @Override
-            public void responseData(List<Capsules> capsules) {
+            public void responseData(List<Capsules> capsules2) {
                 System.out.println(capsules);
 
-
+                capsules = capsules2;
 
                 if(capsules.get(0) != null){
                     Toast.makeText(Maps.this, "Success", Toast.LENGTH_SHORT).show();
@@ -95,12 +95,12 @@ public class Maps extends AppCompatActivity implements
         //mMap.setMinZoomPreference(11);
 
         // define point to center on
-        LatLng origin = new LatLng(50.13, 8.69);
+        LatLng origin = new LatLng(50.1299187, 8.6923254);
         CameraUpdate panToOrigin = CameraUpdateFactory.newLatLng(origin);
         mMap.moveCamera(panToOrigin);
 
         // set zoom level with animation
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(14), 400, null);
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 200, null);
     }
 
     private void enableMyLocationIfPermitted() {
