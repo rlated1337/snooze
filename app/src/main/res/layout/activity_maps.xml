@@ -1,64 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff"
-    tools:context=".Maps">
-
-    <Button
-        android:id="@+id/btn_maps_back"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/rounded_button"
-        android:text="Back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/btn_maps_Book"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/rounded_button"
-        android:text="Book"
-        app:layout_constraintStart_toEndOf="@+id/btn_maps_back"
-        app:layout_constraintTop_toTopOf="parent" />
+    android:orientation="vertical">
 
     <fragment
-        android:id="@+id/mapTest"
-        android:name="com.google.android.gms.maps.SupportMapFragment"
-        android:layout_width="395dp"
-        android:layout_height="513dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/sView_Maps_CapsuleList"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        android:id="@+id/map"
+        class="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="430dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true" />
 
-
-    <ScrollView
-        android:id="@+id/sView_Maps_CapsuleList"
-        android:layout_width="395dp"
-        android:layout_height="190dp"
-        android:layout_marginBottom="8dp"
-        android:background="#EEE8E8"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.375"
-        app:layout_constraintStart_toStartOf="parent">
+    <HorizontalScrollView
+        android:id="@+id/sView_Menu_ScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:layout_below="@+id/map"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="0dp">
 
         <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical" />
-    </ScrollView>
-</android.support.constraint.ConstraintLayout>
+    </HorizontalScrollView>
+
+    <Button
+        android:id="@+id/btn_Maps_Back"
+        android:layout_width="205dp"
+        android:layout_height="65dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="0dp"
+        android:layout_marginTop="20dp"
+        android:text="Back" />
+
+    <Button
+        android:id="@+id/btn_Maps_Booking"
+        android:layout_width="205dp"
+        android:layout_height="65dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
+        android:text="Button" />
+
+
+
+</RelativeLayout>

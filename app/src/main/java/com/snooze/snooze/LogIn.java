@@ -48,7 +48,7 @@ public class LogIn extends AppCompatActivity {
 
                         if(myResponse.length() > 0){
                             Toast.makeText(LogIn.this, "Success", Toast.LENGTH_SHORT).show();
-                            switchScreens(Menu.class, myResponse);
+                            switchScreensWithObject(Menu.class, myResponse);
                         }
                     }
                 });
@@ -64,7 +64,7 @@ public class LogIn extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                switchScreens(Register.class, obj);
+                switchScreensWithObject(Register.class, obj);
             }
         });
 
@@ -72,16 +72,22 @@ public class LogIn extends AppCompatActivity {
             JSONObject obj = new JSONObject();
             @Override
             public void onClick(View v) {
-                switchScreens(AboutSnooze.class, null);
+                switchScreensWithoutObject(Menu.class);
             }
         });
     }
 
 
-    public void switchScreens(Class s, JSONObject obj)
+    public void switchScreensWithObject(Class s, JSONObject obj)
     {
         Intent i = new Intent(this,s);
         i.putExtra("ACC_TOKEN", obj.toString());
+        startActivity(i);
+
+    }
+    public void switchScreensWithoutObject(Class s)
+    {
+        Intent i = new Intent(this,s);
         startActivity(i);
 
     }

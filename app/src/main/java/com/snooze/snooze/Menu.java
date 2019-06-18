@@ -44,7 +44,7 @@ public class Menu extends AppCompatActivity {
         });
 
         System.out.println(getIntent().getStringExtra("ACC_TOKEN"));
-
+/*
         try {
             json_object = new JSONObject(getIntent().getStringExtra("ACC_TOKEN"));
             System.out.println(json_object.getString("id"));
@@ -54,6 +54,7 @@ public class Menu extends AppCompatActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        */
 
 
 
