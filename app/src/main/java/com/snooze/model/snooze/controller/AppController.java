@@ -1,10 +1,14 @@
 package com.snooze.model.snooze.controller;
 
+import android.graphics.Paint;
+
 import com.snooze.api.snooze.ApiConnector;
 import com.snooze.api.snooze.CapsulePreferencesService;
 import com.snooze.api.snooze.CapsuleService;
 import com.snooze.api.snooze.inc.Capsules;
 import com.snooze.snooze.MainActivity;
+
+import org.json.JSONObject;
 
 import java.util.List;
 
@@ -19,7 +23,7 @@ public class AppController {
     private ApiConnector connect;
     private CapsuleService service;
     private String accessToken;
-
+    private DataInterface2 mListener;
 
 
     public AppController() {
@@ -44,7 +48,10 @@ public class AppController {
                     System.out.println("Code: " + response.code());
                     System.out.println("Message: " + response.message());
                 }
+
                 List<Capsules> capsules = response.body();
+
+                mListener.responseData(capsules);
 
 
                 for(Capsules capsule : capsules){
@@ -53,7 +60,7 @@ public class AppController {
                     content += "Latitude: " + capsule.getLatitude() + "\n";
                     content += "Longitude: " + capsule.getLongitude() + "\n";
                     content += "IP-Address: " + capsule.getIpAddress() + "\n";
-                    content += "Price" + capsule.getPrice() + "\n";
+                    content += "Price: " + capsule.getPrice() + "\n";
                     content += "-----------" + "\n";
 
                     System.out.println(content);
@@ -68,6 +75,14 @@ public class AppController {
                 System.out.println(t.getMessage());
             }
         });
+    }
+
+    public interface DataInterface2 {
+        void responseData( List<Capsules> myResponse );
+    }
+
+    public void setOnDataListener(DataInterface2 listener) {
+        mListener = listener;
     }
 
     public void showCalender(){

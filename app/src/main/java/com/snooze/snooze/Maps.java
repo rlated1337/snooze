@@ -24,8 +24,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.snooze.api.snooze.inc.Capsules;
 import com.snooze.model.snooze.controller.AppController;
+import com.snooze.model.snooze.controller.UserController;
 
+import org.json.JSONObject;
+
+import java.util.List;
 
 
 public class Maps extends AppCompatActivity implements
@@ -53,6 +58,17 @@ public class Maps extends AppCompatActivity implements
         System.out.println(aController);
 
         showCapsuleList();
+
+        aController.setOnDataListener(new AppController.DataInterface2() {
+            @Override
+            public void responseData(List<Capsules> capsules) {
+                System.out.println(capsules);
+
+                if(capsules.get(0) != null){
+                    Toast.makeText(Maps.this, "Success", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
