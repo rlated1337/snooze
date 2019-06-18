@@ -4,9 +4,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ScrollView;
 
 public class Bookings extends AppCompatActivity {
     private Button btn_back;
+    private ScrollView sView_List;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,5 +21,10 @@ public class Bookings extends AppCompatActivity {
                 finish();
             }
         });
+        sView_List = findViewById(R.id.sView_Bookings_BookingList);
+
+
     }
 }
+
+

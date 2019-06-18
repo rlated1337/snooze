@@ -32,19 +32,19 @@ public class Menu extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchScreens(AboutSnooze.class);
+                switchScreensWithoutObject(AboutSnooze.class);
             }
         });
         btnMaps.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchScreens(Maps.class);
+                switchScreensWithoutObject(Maps.class);
             }
         });
         btnBookings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchScreens(Bookings.class);
+                switchScreensWithoutObject(Bookings.class);
             }
         });
 
@@ -66,10 +66,16 @@ public class Menu extends AppCompatActivity {
 
 
     }
-    public void switchScreens(Class s)
+    public void switchScreensWithObject(Class s, JSONObject obj)
     {
         Intent i = new Intent(this,s);
+        i.putExtra("ACC_TOKEN", obj.toString());
+        startActivity(i);
 
+    }
+    public void switchScreensWithoutObject(Class s)
+    {
+        Intent i = new Intent(this,s);
         startActivity(i);
 
     }
