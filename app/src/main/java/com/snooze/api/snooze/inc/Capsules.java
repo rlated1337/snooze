@@ -8,10 +8,10 @@ public class Capsules {
     private String name;
 
     @SerializedName("Latitude")
-    private Integer latitude;
+    private double latitude;
 
     @SerializedName("Longitude")
-    private Integer longitude;
+    private double longitude;
 
     @SerializedName("IPAddress")
     private String ipAddress;
@@ -22,7 +22,7 @@ public class Capsules {
     @SerializedName("id")
     private Integer id;
 
-    public Capsules(String name, Integer latitude, Integer longitude, String ipAddress, Integer price) {
+    public Capsules(String name, Double latitude, Double longitude, String ipAddress, Integer price) {
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -38,7 +38,7 @@ public class Capsules {
         this.name = name;
     }
 
-    public Integer getLatitude() {
+    public Double getLatitude() {
         return latitude;
     }
 
@@ -46,7 +46,7 @@ public class Capsules {
         this.latitude = latitude;
     }
 
-    public Integer getLongitude() {
+    public Double getLongitude() {
         return longitude;
     }
 
