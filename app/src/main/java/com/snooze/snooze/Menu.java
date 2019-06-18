@@ -1,14 +1,13 @@
 package com.snooze.snooze;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
 import com.snooze.api.snooze.inc.Session;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class Menu extends AppCompatActivity {

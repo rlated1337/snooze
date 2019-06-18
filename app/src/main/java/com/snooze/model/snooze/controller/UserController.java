@@ -7,11 +7,10 @@ import com.snooze.api.snooze.inc.Session;
 import com.snooze.api.snooze.inc.SnoozeUsers;
 import com.snooze.model.snooze.User;
 import com.snooze.model.snooze.service.UserService;
+import com.snooze.snooze.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.sql.SQLOutput;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,12 +26,15 @@ public class UserController {
     private static final String accessToken = "GN0tME3nUBa6auETCDju80cAzMSMDaDY791UafudXydp6AwwLfVjEJDDxJTjHEg3";
     private String userAccessToken;
     private DataInterface mListener;
+    private AppController aController;
 
     public UserController() {
         /* CONNECTION TO API */
         connect = new ApiConnector();
         retrofit = connect.getRetrofitInstance();
         service = retrofit.create(SnoozeUsersService.class);
+        aController =  MainActivity.getInstance().getaController();
+
     }
 
     public void register(String username, String email, String password){
@@ -127,8 +129,10 @@ public class UserController {
                     }
 
                     mListener.responseData(obj);
-
+                    setUserAccessToken(response.body().getId());
+                    System.out.println("ACCESS TOKEN: " + getUserAccessToken());
                 }
+
             }
 
             @Override
@@ -159,5 +163,11 @@ public class UserController {
         void responseData( JSONObject myResponse );
     }
 
+    public String getUserAccessToken() {
+        return userAccessToken;
+    }
 
+    public void setUserAccessToken(String userAccessToken) {
+        this.userAccessToken = userAccessToken;
+    }
 }
