@@ -48,6 +48,20 @@ public class Menu extends AppCompatActivity {
             }
         });
 
+        btnAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchScreensWithoutObject(Account.class);
+            }
+        });
+
+        btnSettings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchScreensWithoutObject(Settings.class);
+            }
+        });
+
         System.out.println(getIntent().getStringExtra("ACC_TOKEN"));
 /*
         try {

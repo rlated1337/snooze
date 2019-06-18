@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".Bookings">
 
+
     <ScrollView
         android:id="@+id/sView_Bookings_BookingList"
         android:layout_width="match_parent"
@@ -21,12 +22,25 @@
     </ScrollView>
 
     <Button
-        android:id="@+id/btn_Booking_Back"
-        android:layout_width="132dp"
-        android:layout_height="61dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Button"
+        android:id="@+id/btn_Bookings_back"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_button"
+        android:text="back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_History"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="316dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rounded_button"
+        android:text="History"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </android.support.constraint.ConstraintLayout>

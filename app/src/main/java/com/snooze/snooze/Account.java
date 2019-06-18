@@ -5,20 +5,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-public class Settings extends AppCompatActivity {
-    Button btnBack;
+public class Account extends AppCompatActivity {
+    private Button btnBack;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_settings);
-
-        btnBack = findViewById(R.id.btn_Settings_Back);
+        setContentView(R.layout.activity_account);
+        btnBack = findViewById(R.id.btn_Account_back);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
-
     }
 }

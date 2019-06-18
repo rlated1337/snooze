@@ -17,7 +17,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Bookings"></activity>
+        <activity android:name=".Account"></activity>
+        <activity android:name=".Bookings" />
 
         <meta-data
             android:name="com.google.android.gms.version"
