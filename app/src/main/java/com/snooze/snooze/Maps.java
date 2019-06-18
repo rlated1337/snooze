@@ -10,7 +10,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -44,7 +43,7 @@ public class Maps extends AppCompatActivity implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        aController = new AppController();
+        aController = MainActivity.getInstance().getaController();
 
 
         if(Build.VERSION.SDK_INT>=Build.VERSION_CODES.M)
@@ -52,13 +51,8 @@ public class Maps extends AppCompatActivity implements
             checkUserLocationPermission();
         }
 
+        showCapsuleList();
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
 
@@ -159,6 +153,10 @@ public class Maps extends AppCompatActivity implements
                     mMap.addCircle(circleOptions);
                 }
             };
+
+    public void showCapsuleList(){
+        aController.showCapsules();
+    }
 
 
 }
