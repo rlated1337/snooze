@@ -50,6 +50,10 @@ public class Maps extends AppCompatActivity implements
         setContentView(R.layout.activity_maps);
         aController = MainActivity.getInstance().getaController();
 
+        System.out.println(aController);
+
+        showCapsuleList();
+
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
         tb.setSubtitle("Your Location");

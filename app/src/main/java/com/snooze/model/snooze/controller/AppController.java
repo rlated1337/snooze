@@ -18,7 +18,7 @@ public class AppController {
     private Retrofit retrofit;
     private ApiConnector connect;
     private CapsuleService service;
-    private String accessToken = "";
+    private String accessToken;
 
 
 
@@ -34,7 +34,7 @@ public class AppController {
     }
 
     public void showCapsules(){
-
+        accessToken = usercontroller.getUserAccessToken();
         Call<List<Capsules>> call = service.getAllCapsules(accessToken);
 
         call.enqueue(new Callback<List<Capsules>>() {
@@ -44,8 +44,8 @@ public class AppController {
                     System.out.println("Code: " + response.code());
                     System.out.println("Message: " + response.message());
                 }
-
                 List<Capsules> capsules = response.body();
+
 
                 for(Capsules capsule : capsules){
                     String content = "";
