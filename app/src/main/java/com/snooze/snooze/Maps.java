@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,11 +23,13 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.snooze.api.snooze.inc.Capsules;
 import com.snooze.model.snooze.controller.AppController;
 import com.snooze.model.snooze.controller.UserController;
@@ -49,7 +52,7 @@ public class Maps extends AppCompatActivity implements
     private static final int Request_User_Location_Code =99;
     private AppController aController;
     private List<Capsules> listCapsules = new ArrayList<Capsules>();
-    private TextView textView4;
+    private GridView textView4;
     private ScrollView scrollView;
 
 
@@ -104,7 +107,7 @@ public class Maps extends AppCompatActivity implements
         mMap.moveCamera(panToOrigin);
 
         // set zoom level with animation
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 200, null);
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 400, null);
     }
 
     private void enableMyLocationIfPermitted() {
@@ -204,7 +207,16 @@ public class Maps extends AppCompatActivity implements
             content += "Preis: " + capsule.getPrice() + "\n";
             content += "________________________" + "\n";
 
-            textView4.append(content);
+           // textView4.append(content);
+
+            // Creating a marker
+            MarkerOptions markerOptions = new MarkerOptions();
+            LatLng lng = new LatLng(capsule.getLatitude(), capsule.getLongitude());
+            // Setting the position for the marker
+            markerOptions.position(lng);
+
+            // Placing a marker on the touched position
+            mMap.addMarker(markerOptions);
         }
     }
 
