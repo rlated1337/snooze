@@ -46,10 +46,15 @@ public class LogIn extends AppCompatActivity {
                     @Override
                     public void responseData(JSONObject myResponse) {
                         System.out.println(myResponse);
+                        System.out.println("data listneer");
 
-                        if(myResponse.length() > 0){
+
+                        if(myResponse.has("id")){
                             Toast.makeText(LogIn.this, "Success", Toast.LENGTH_SHORT).show();
                             switchScreensWithObject(Menu.class, myResponse);
+                        }
+                        else{
+                            Toast.makeText(LogIn.this, "Failed to login", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });

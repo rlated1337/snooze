@@ -107,8 +107,12 @@ public class UserController {
             @Override
             public void onResponse(Call<Session> call, Response<Session> response) {
                 if(!response.isSuccessful()){
+
                     System.out.println("Code: " + response.code());
                     System.out.println("Message: " + response.message());
+
+                    JSONObject obj = new JSONObject();
+                    mListener.responseData(obj);
                 }
 
                 if (response!=null && response.body() != null && mListener != null) {
@@ -138,6 +142,9 @@ public class UserController {
             @Override
             public void onFailure(Call<Session> call, Throwable t) {
                 System.out.println(t.getMessage());
+
+                JSONObject obj = new JSONObject();
+                mListener.responseData(obj);
 
             }
         });
