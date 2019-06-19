@@ -99,21 +99,10 @@ public class Maps extends AppCompatActivity implements
         //mMap.setMinZoomPreference(11);
 
         // define point to center on
+
         LatLng origin = new LatLng(50.1299187, 8.6923254);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
-
-
-        // set zoom level with animation
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 200, null);
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 400, null);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin, 15));
     }
-
-
-
-
-
-
-
 
     public void showCapsuleList(){
         aController.showCapsules();
