@@ -10,8 +10,11 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -27,6 +30,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.snooze.api.snooze.inc.Capsules;
 import com.snooze.model.snooze.controller.AppController;
 import com.snooze.model.snooze.controller.UserController;
@@ -42,14 +47,11 @@ public class Maps extends AppCompatActivity implements
 
     private GoogleMap mMap;
     private Button btnBack;
-    private GoogleApiClient googleApiClient;
-    private LocationRequest locationRequest;
-    private Location lastLocation;
-    private Marker currentUserLocationMarker;
+    private Location mLastKnownLocation;
+    private Boolean mLocationPermissionGranted;
     private static final int Request_User_Location_Code =99;
     private AppController aController;
     private List<Capsules> listCapsules = new ArrayList<Capsules>();
-    private TextView textView4;
     private ScrollView scrollView;
 
 
@@ -59,7 +61,7 @@ public class Maps extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         aController = MainActivity.getInstance().getaController();
-        textView4 = findViewById(R.id.textView4);
+
 
         System.out.println(aController);
 
@@ -77,6 +79,7 @@ public class Maps extends AppCompatActivity implements
             }
         });
 
+
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
         tb.setSubtitle("Your Location");
@@ -91,107 +94,23 @@ public class Maps extends AppCompatActivity implements
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        mMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
-        mMap.setOnMyLocationClickListener(onMyLocationClickListener);
-        enableMyLocationIfPermitted();
-
         mMap.getUiSettings().setZoomControlsEnabled(true);
         //mMap.setMinZoomPreference(11);
 
         // define point to center on
         LatLng origin = new LatLng(50.1299187, 8.6923254);
-        CameraUpdate panToOrigin = CameraUpdateFactory.newLatLng(origin);
-        mMap.moveCamera(panToOrigin);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(origin));
+
 
         // set zoom level with animation
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 200, null);
+
+
     }
 
-    private void enableMyLocationIfPermitted() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_FINE_LOCATION},
-                    LOCATION_PERMISSION_REQUEST_CODE);
-        } else if (mMap != null) {
-            mMap.setMyLocationEnabled(true);
-        }
-    }
 
-    private void showDefaultLocation() {
-        Toast.makeText(this, "Location permission not granted, " +
-                        "showing default location",
-                Toast.LENGTH_SHORT).show();
-        LatLng redmond = new LatLng(50.11552, 8.68417);
 
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(redmond));
-    }
 
-    public boolean checkUserLocationPermission()
-    {
-        if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED)
-        {
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION))
-            {
-                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},Request_User_Location_Code);
-            }
-            else
-            {
-                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},Request_User_Location_Code);
-            }
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case LOCATION_PERMISSION_REQUEST_CODE: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    enableMyLocationIfPermitted();
-                } else {
-                    showDefaultLocation();
-                }
-                return;
-            }
-
-        }
-    }
-
-    private GoogleMap.OnMyLocationButtonClickListener onMyLocationButtonClickListener =
-            new GoogleMap.OnMyLocationButtonClickListener() {
-                @Override
-                public boolean onMyLocationButtonClick() {
-                    mMap.setMinZoomPreference(15);
-                    return false;
-                }
-            };
-
-    private GoogleMap.OnMyLocationClickListener onMyLocationClickListener =
-            new GoogleMap.OnMyLocationClickListener() {
-                @Override
-                public void onMyLocationClick(@NonNull Location location) {
-
-                    mMap.setMinZoomPreference(12);
-
-                    CircleOptions circleOptions = new CircleOptions();
-                    circleOptions.center(new LatLng(location.getLatitude(),
-                            location.getLongitude()));
-
-                    circleOptions.radius(200);
-                    circleOptions.fillColor(Color.RED);
-                    circleOptions.strokeWidth(6);
-
-                    mMap.addCircle(circleOptions);
-                }
-            };
 
     public void showCapsuleList(){
         aController.showCapsules();
@@ -204,8 +123,13 @@ public class Maps extends AppCompatActivity implements
             content += "Preis: " + capsule.getPrice() + "\n";
             content += "________________________" + "\n";
 
-            textView4.append(content);
+            System.out.println(content);
         }
     }
 
+
+
+
+
 }
+
