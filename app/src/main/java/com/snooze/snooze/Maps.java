@@ -12,10 +12,9 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,13 +24,13 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.snooze.api.snooze.inc.Capsules;
 import com.snooze.model.snooze.controller.AppController;
 import com.snooze.model.snooze.controller.UserController;
@@ -47,11 +46,14 @@ public class Maps extends AppCompatActivity implements
 
     private GoogleMap mMap;
     private Button btnBack;
-    private Location mLastKnownLocation;
-    private Boolean mLocationPermissionGranted;
+    private GoogleApiClient googleApiClient;
+    private LocationRequest locationRequest;
+    private Location lastLocation;
+    private Marker currentUserLocationMarker;
     private static final int Request_User_Location_Code =99;
     private AppController aController;
     private List<Capsules> listCapsules = new ArrayList<Capsules>();
+    private GridView textView4;
     private ScrollView scrollView;
 
 
@@ -61,7 +63,7 @@ public class Maps extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         aController = MainActivity.getInstance().getaController();
-
+        textView4 = findViewById(R.id.textView4);
 
         System.out.println(aController);
 
@@ -78,7 +80,6 @@ public class Maps extends AppCompatActivity implements
                 printCapsuleList();
             }
         });
-
 
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
@@ -104,9 +105,11 @@ public class Maps extends AppCompatActivity implements
 
         // set zoom level with animation
         mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 200, null);
-
-
+        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 400, null);
     }
+
+
+
 
 
 
@@ -123,13 +126,17 @@ public class Maps extends AppCompatActivity implements
             content += "Preis: " + capsule.getPrice() + "\n";
             content += "________________________" + "\n";
 
-            System.out.println(content);
+           // textView4.append(content);
+
+            // Creating a marker
+            MarkerOptions markerOptions = new MarkerOptions();
+            LatLng lng = new LatLng(capsule.getLatitude(), capsule.getLongitude());
+            // Setting the position for the marker
+            markerOptions.position(lng);
+
+            // Placing a marker on the touched position
+            mMap.addMarker(markerOptions);
         }
     }
 
-
-
-
-
 }
-
