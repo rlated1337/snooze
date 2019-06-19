@@ -3,11 +3,15 @@ package com.snooze.model.snooze.controller;
 import android.graphics.Paint;
 
 import com.snooze.api.snooze.ApiConnector;
+import com.snooze.api.snooze.BookingService;
 import com.snooze.api.snooze.CapsulePreferencesService;
 import com.snooze.api.snooze.CapsuleService;
+import com.snooze.api.snooze.inc.Bookings;
 import com.snooze.api.snooze.inc.Capsules;
+import com.snooze.api.snooze.inc.SnoozeUsers;
 import com.snooze.snooze.MainActivity;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.List;
@@ -22,14 +26,17 @@ public class AppController {
     private Retrofit retrofit;
     private ApiConnector connect;
     private CapsuleService service;
+    private BookingService serviceBooking;
     private String accessToken;
     private DataInterface2 mListener;
+    private DataInterfaceBookings bListener;
 
 
     public AppController() {
         connect = new ApiConnector();
         retrofit = connect.getRetrofitInstance();
         service = retrofit.create(CapsuleService.class);
+        serviceBooking = retrofit.create(BookingService.class);
 
         usercontroller =  MainActivity.getInstance().getuController();
 
@@ -61,13 +68,50 @@ public class AppController {
         });
     }
 
+    public void getBookings(){
+
+        Call<List<Bookings>> call = serviceBooking.getAllBookings(accessToken);
+
+        call.enqueue(new Callback<List<Bookings>>() {
+            @Override
+            public void onResponse(Call<List<Bookings>> call, Response<List<Bookings>> response) {
+                if(!response.isSuccessful()){
+                    System.out.println("Code: " + response.code());
+                    System.out.println("Message: " + response.message());
+                }
+
+                if (response!=null && response.body() != null && mListener != null) {
+
+                    bListener.responseBookings(response.body());
+
+                }
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<List<Bookings>> call, Throwable t) {
+                System.out.println(t.getMessage());
+
+            }
+        });
+
+    }
+
     public interface DataInterface2 {
         void responseData( List<Capsules> myResponse );
+    }
+
+    public interface DataInterfaceBookings {
+        void responseBookings(List<Bookings> myBookings);
     }
 
     public void setOnDataListener(DataInterface2 listener) {
         mListener = listener;
     }
+
+    public void setBookingListener(DataInterfaceBookings listener ) { bListener = listener; }
 
     public void showCalender(){
 

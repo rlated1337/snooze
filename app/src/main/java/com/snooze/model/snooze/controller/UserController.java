@@ -177,4 +177,6 @@ public class UserController {
     public void setUserAccessToken(String userAccessToken) {
         this.userAccessToken = userAccessToken;
     }
+
+
 }

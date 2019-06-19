@@ -5,11 +5,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
+import android.widget.Toast;
+
+import com.snooze.api.snooze.inc.Capsules;
+import com.snooze.model.snooze.controller.AppController;
+
+import java.util.List;
 
 public class Bookings extends AppCompatActivity {
     private Button btn_back;
     private Button btn_history;
     private ScrollView sView_List;
+    private AppController aController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +31,18 @@ public class Bookings extends AppCompatActivity {
         });
         btn_history = findViewById(R.id.btn_History);
         sView_List = findViewById(R.id.sView_Bookings_BookingList);
+        aController = MainActivity.getInstance().getaController();
+
+
+        aController.getBookings();
+
+        aController.setBookingListener(new AppController.DataInterfaceBookings() {
+            @Override
+            public void responseBookings(List<com.snooze.api.snooze.inc.Bookings> myBookings) {
+                System.out.println(myBookings);
+            }
+        });
+
 
 
     }
