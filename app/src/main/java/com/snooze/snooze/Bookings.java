@@ -17,6 +17,7 @@ public class Bookings extends AppCompatActivity {
     private Button btn_history;
     private ScrollView sView_List;
     private AppController aController;
+    private List<String> sList_History;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +30,6 @@ public class Bookings extends AppCompatActivity {
                 finish();
             }
         });
-        btn_history = findViewById(R.id.btn_History);
         sView_List = findViewById(R.id.sView_Bookings_BookingList);
         aController = MainActivity.getInstance().getaController();
 
