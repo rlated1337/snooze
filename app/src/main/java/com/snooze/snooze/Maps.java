@@ -4,17 +4,15 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.Button;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -29,7 +27,6 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.snooze.api.snooze.inc.Capsules;
 import com.snooze.model.snooze.controller.AppController;
-import com.snooze.model.snooze.controller.UserController;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,9 +45,13 @@ public class Maps extends AppCompatActivity implements
     private Marker currentUserLocationMarker;
     private static final int Request_User_Location_Code =99;
     private AppController aController;
-    private List<Capsules> listCapsules = new ArrayList<Capsules>();
-    private TextView textView4;
-    private ScrollView scrollView;
+    private List<Capsules> listCapsules = new ArrayList<>();
+
+    private RecyclerView mRecyclerView;
+    private RecyclerView.LayoutManager mLayoutManager;
+    private CapsuleAdapter mAdapter;
+    private ArrayList<Capsules> mCapsule;
+
 
 
 
@@ -59,23 +60,33 @@ public class Maps extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         aController = MainActivity.getInstance().getaController();
-        textView4 = findViewById(R.id.textView4);
+        //textView4 = findViewById(R.id.textView4);
+        mRecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+        mCapsule = new ArrayList<>();
 
         System.out.println(aController);
 
+
         showCapsuleList();
+
+
 
         aController.setOnDataListener(new AppController.DataInterface2() {
             @Override
             public void responseData(List<Capsules> capsules) {
                 System.out.println(capsules);
-                listCapsules = capsules;
-                if(capsules.get(0) != null){
+                if(capsules.get(0) != null) {
                     Toast.makeText(Maps.this, "Success", Toast.LENGTH_SHORT).show();
+                    listCapsules = capsules;
+                    System.out.println("CAPSULE AMOUNT: " + listCapsules.size());
+                    System.out.println("TEST: " + listCapsules);
                 }
+                System.out.println(listCapsules.get(1).getName());
                 printCapsuleList();
+                buildRecyclerView();
             }
         });
+
 
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
@@ -196,16 +207,25 @@ public class Maps extends AppCompatActivity implements
     public void showCapsuleList(){
         aController.showCapsules();
     }
-    public void printCapsuleList(){
-        for(Capsules capsule : listCapsules){
-            String content = "";
-            content += "Name: " + capsule.getName() + "\n";
-            content += capsule.getIpAddress() + "\n";
-            content += "Preis: " + capsule.getPrice() + "\n";
-            content += "________________________" + "\n";
-
-            textView4.append(content);
+    public void printCapsuleList() {
+        for (int i = 0; i < listCapsules.size(); i++) {
+            System.out.println(listCapsules.get(i).getPrice());
+            mCapsule.add(new Capsules(R.drawable.snoozelogo,listCapsules.get(i).getName(),listCapsules.get(i).getPrice()));
         }
+    }
+
+    public void buildRecyclerView(){
+        mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        mAdapter = new CapsuleAdapter(mCapsule);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.setAdapter(mAdapter);
+
+        mAdapter.setOnClickListener(new CapsuleAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+
+            }
+        });
     }
 
 }

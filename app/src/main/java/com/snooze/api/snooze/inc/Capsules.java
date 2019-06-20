@@ -22,11 +22,19 @@ public class Capsules {
     @SerializedName("id")
     private Integer id;
 
+    private int imageResource;
+
+
     public Capsules(String name, Double latitude, Double longitude, String ipAddress, Integer price) {
         this.name = name;
         this.latitude = latitude;
         this.longitude = longitude;
         this.ipAddress = ipAddress;
+        this.price = price;
+    }
+    public Capsules(Integer imageResource, String name, Integer price){
+        this.imageResource = imageResource;
+        this.name = name;
         this.price = price;
     }
 
@@ -76,5 +84,13 @@ public class Capsules {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public int getImageResource() {
+        return imageResource;
+    }
+
+    public void setImageResource(int imageResource) {
+        this.imageResource = imageResource;
     }
 }
