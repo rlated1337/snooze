@@ -46,7 +46,7 @@ public class LogIn extends AppCompatActivity {
                     @Override
                     public void responseData(JSONObject myResponse) {
                         System.out.println(myResponse);
-                        System.out.println("data listneer");
+                        System.out.println("data listener");
 
 
                         if(myResponse.has("id")){

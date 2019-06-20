@@ -39,6 +39,7 @@ public class Booking extends AppCompatActivity {
             @Override
             public void responseBookings(List<com.snooze.api.snooze.inc.Bookings> myBookings) {
                 System.out.println(myBookings);
+                printBookingsList();
             }
         });
 
@@ -50,8 +51,9 @@ public class Booking extends AppCompatActivity {
     public void printBookingsList(){
         for(com.snooze.api.snooze.inc.Bookings booking : listBookings){
             String content = "";
-            content += "Name: " + booking.getDate() + "\n";
+            content += "Date: " + booking.getDate() + "\n";
             content += "Preis: " + booking.getAmount()  + "\n";
+            content += "Vendor"+ booking.getVendor() + "\n";
             content += "________________________" + "\n";
             System.out.println(content);
         }
