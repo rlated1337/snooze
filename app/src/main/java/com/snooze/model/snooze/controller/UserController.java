@@ -104,7 +104,7 @@ public class UserController {
         final String respUsername = username;
         final String respPassword = password;
 
-        Call<Session> call = service.login(accessToken,creds);
+        Call<Session> call = service.login(userAccessToken,creds);
 
         call.enqueue(new Callback<Session>() {
             @Override
