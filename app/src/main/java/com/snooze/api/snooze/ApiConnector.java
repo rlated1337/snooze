@@ -7,7 +7,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class ApiConnector {
 
     private static Retrofit retrofit;
-    private static final String BASE_URL = "https://platania.info:3001/api/";
+    private static final String BASE_URL = "https://platania.info:3000/api/";
 
 
 
