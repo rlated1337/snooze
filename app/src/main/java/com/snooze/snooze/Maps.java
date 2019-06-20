@@ -1,32 +1,23 @@
 package com.snooze.snooze;
 
-import android.location.Location;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.snooze.api.snooze.inc.Capsules;
 import com.snooze.model.snooze.controller.AppController;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -41,6 +32,7 @@ public class Maps extends AppCompatActivity implements
     private RecyclerView.LayoutManager mLayoutManager;
     private CapsuleAdapter mAdapter;
     private ArrayList<Capsules> mCapsule;
+    private Button btn_Maps_back;
 
 
     @Override
@@ -50,7 +42,15 @@ public class Maps extends AppCompatActivity implements
         aController = MainActivity.getInstance().getaController();
         //textView4 = findViewById(R.id.textView4);
         mRecyclerView = (RecyclerView)findViewById(R.id.recyclerView);
+        btn_Maps_back = findViewById(R.id.btn_Maps_Back);
         mCapsule = new ArrayList<>();
+
+        btn_Maps_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         System.out.println(aController);
 
