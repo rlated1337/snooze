@@ -101,7 +101,7 @@ public interface SnoozeUsersService {
     Call<List<SnoozeUsers>> confirmRegistration(@Query("uid") String uid, @Query("token") String token, @Query("access_token") String key);
 
     @GET("SnoozeUsers/GetUserData")
-    Call<List<SnoozeUsers>> getUserData(@Query("access_token") String key);
+    Call<JSONObject> getUserData(@Query("access_token") String key);
 
     /* LOGIN / LOGOUT / RESET / PW */
     @POST("SnoozeUsers/login")

@@ -157,11 +157,11 @@ public class UserController {
     public void getBookings(){
         System.out.println("GET BOOKINGS");
         System.out.println(userAccessToken);
-        Call<List<SnoozeUsers>> call = service.getUserData(userAccessToken);
+        Call<JSONObject> call = service.getUserData(userAccessToken);
 
-        call.enqueue(new Callback<List<SnoozeUsers>>() {
+        call.enqueue(new Callback<JSONObject>() {
             @Override
-            public void onResponse(Call<List<SnoozeUsers>> call, Response<List<SnoozeUsers>> response) {
+            public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
                 if(!response.isSuccessful()){
                     System.out.println("Code: " + response.code());
                     System.out.println("Message: " + response.message());
@@ -169,6 +169,8 @@ public class UserController {
 
                 if (response!=null && response.body() != null && mListener != null) {
 
+
+                    System.out.println(response.body());
                     bListener.responseBookings(response.body());
 
                 }
@@ -178,7 +180,7 @@ public class UserController {
             }
 
             @Override
-            public void onFailure(Call<List<SnoozeUsers>> call, Throwable t) {
+            public void onFailure(Call<JSONObject> call, Throwable t) {
                 System.out.println(t.getMessage());
 
             }
@@ -207,7 +209,7 @@ public class UserController {
     }
 
     public interface DataInterfaceBookings {
-        void responseBookings(List<SnoozeUsers> myBookings);
+        void responseBookings(JSONObject myBookings);
     }
 
 

@@ -10,6 +10,8 @@ import com.snooze.api.snooze.inc.SnoozeUsers;
 import com.snooze.model.snooze.controller.AppController;
 import com.snooze.model.snooze.controller.UserController;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +40,7 @@ public class Booking extends AppCompatActivity {
         uController.getBookings();
         uController.setOnBookingListener(new UserController.DataInterfaceBookings() {
             @Override
-            public void responseBookings(List<SnoozeUsers> myBookings) {
+            public void responseBookings(JSONObject myBookings) {
                 System.out.println(myBookings);
             }
         });
