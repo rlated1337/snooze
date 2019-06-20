@@ -26,7 +26,6 @@ public class UserController {
     private Retrofit retrofit;
     private SnoozeUsersService service;
     private ApiConnector connect;
-    private static final String accessToken = "GN0tME3nUBa6auETCDju80cAzMSMDaDY791UafudXydp6AwwLfVjEJDDxJTjHEg3";
     private String userAccessToken;
     private DataInterface mListener;
     private DataInterfaceBookings bListener;
@@ -44,7 +43,7 @@ public class UserController {
     public void register(String username, String email, String password){
         SnoozeUsers snoozeUser = new SnoozeUsers("FH",username,email,false ,password);
 
-        Call<SnoozeUsers> call = service.postNewUser(accessToken,snoozeUser);
+        Call<SnoozeUsers> call = service.postNewUser(userAccessToken,snoozeUser);
 
         call.enqueue(new Callback<SnoozeUsers>() {
             @Override
@@ -156,8 +155,9 @@ public class UserController {
 
 
     public void getBookings(){
-
-        Call<List<SnoozeUsers>> call = service.getUserData(accessToken);
+        System.out.println("GET BOOKINGS");
+        System.out.println(userAccessToken);
+        Call<List<SnoozeUsers>> call = service.getUserData(userAccessToken);
 
         call.enqueue(new Callback<List<SnoozeUsers>>() {
             @Override
