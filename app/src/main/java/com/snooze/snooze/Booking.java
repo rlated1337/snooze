@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
 
+import com.google.gson.JsonElement;
 import com.snooze.api.snooze.inc.SnoozeUsers;
 import com.snooze.model.snooze.controller.AppController;
 import com.snooze.model.snooze.controller.UserController;
@@ -40,7 +41,7 @@ public class Booking extends AppCompatActivity {
         uController.getBookings();
         uController.setOnBookingListener(new UserController.DataInterfaceBookings() {
             @Override
-            public void responseBookings(JSONObject myBookings) {
+            public void responseBookings(JsonElement myBookings) {
                 System.out.println(myBookings);
             }
         });

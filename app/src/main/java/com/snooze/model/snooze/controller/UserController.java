@@ -1,5 +1,6 @@
 package com.snooze.model.snooze.controller;
 
+import com.google.gson.JsonElement;
 import com.snooze.api.snooze.ApiConnector;
 import com.snooze.api.snooze.SnoozeUsersService;
 import com.snooze.api.snooze.inc.Bookings;
@@ -157,11 +158,12 @@ public class UserController {
     public void getBookings(){
         System.out.println("GET BOOKINGS");
         System.out.println(userAccessToken);
-        Call<JSONObject> call = service.getUserData(userAccessToken);
+        Call<JsonElement> call = service.getUserData(userAccessToken);
 
-        call.enqueue(new Callback<JSONObject>() {
+        call.enqueue(new Callback<JsonElement>() {
             @Override
-            public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
+            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+
                 if(!response.isSuccessful()){
                     System.out.println("Code: " + response.code());
                     System.out.println("Message: " + response.message());
@@ -180,7 +182,7 @@ public class UserController {
             }
 
             @Override
-            public void onFailure(Call<JSONObject> call, Throwable t) {
+            public void onFailure(Call<JsonElement> call, Throwable t) {
                 System.out.println(t.getMessage());
 
             }
@@ -209,7 +211,7 @@ public class UserController {
     }
 
     public interface DataInterfaceBookings {
-        void responseBookings(JSONObject myBookings);
+        void responseBookings(JsonElement myBookings);
     }
 
 

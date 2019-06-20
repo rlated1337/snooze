@@ -1,5 +1,6 @@
 package com.snooze.api.snooze;
 
+import com.google.gson.JsonElement;
 import com.snooze.api.snooze.inc.Bookings;
 import com.snooze.api.snooze.inc.Credentials;
 import com.snooze.api.snooze.inc.Session;
@@ -101,7 +102,7 @@ public interface SnoozeUsersService {
     Call<List<SnoozeUsers>> confirmRegistration(@Query("uid") String uid, @Query("token") String token, @Query("access_token") String key);
 
     @GET("SnoozeUsers/GetUserData")
-    Call<JSONObject> getUserData(@Query("access_token") String key);
+    Call<JsonElement> getUserData(@Query("access_token") String key);
 
     /* LOGIN / LOGOUT / RESET / PW */
     @POST("SnoozeUsers/login")
