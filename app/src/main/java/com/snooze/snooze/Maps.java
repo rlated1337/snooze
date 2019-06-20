@@ -32,16 +32,9 @@ import java.util.List;
 
 public class Maps extends AppCompatActivity implements
         OnMapReadyCallback {
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
 
 
     private GoogleMap mMap;
-    private Button btnBack;
-    private GoogleApiClient googleApiClient;
-    private LocationRequest locationRequest;
-    private Location lastLocation;
-    private Marker currentUserLocationMarker;
-    private static final int Request_User_Location_Code =99;
     private AppController aController;
     private List<Capsules> listCapsules = new ArrayList<>();
     private RecyclerView mRecyclerView;
@@ -84,9 +77,7 @@ public class Maps extends AppCompatActivity implements
             }
         });
 
-        Toolbar tb = findViewById(R.id.toolbar);
-        setSupportActionBar(tb);
-        tb.setSubtitle("Your Location");
+
 
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
