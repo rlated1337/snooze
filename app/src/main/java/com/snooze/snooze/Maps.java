@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.location.Location;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -13,6 +14,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
+import android.widget.ScrollView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -20,11 +23,13 @@ import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.snooze.api.snooze.inc.Capsules;
 import com.snooze.model.snooze.controller.AppController;
 
@@ -66,7 +71,6 @@ public class Maps extends AppCompatActivity implements
 
         System.out.println(aController);
 
-
         showCapsuleList();
 
 
@@ -87,7 +91,6 @@ public class Maps extends AppCompatActivity implements
             }
         });
 
-
         Toolbar tb = findViewById(R.id.toolbar);
         setSupportActionBar(tb);
         tb.setSubtitle("Your Location");
@@ -102,107 +105,13 @@ public class Maps extends AppCompatActivity implements
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        mMap.setOnMyLocationButtonClickListener(onMyLocationButtonClickListener);
-        mMap.setOnMyLocationClickListener(onMyLocationClickListener);
-        enableMyLocationIfPermitted();
-
         mMap.getUiSettings().setZoomControlsEnabled(true);
         //mMap.setMinZoomPreference(11);
 
         // define point to center on
         LatLng origin = new LatLng(50.1299187, 8.6923254);
-        CameraUpdate panToOrigin = CameraUpdateFactory.newLatLng(origin);
-        mMap.moveCamera(panToOrigin);
-
-        // set zoom level with animation
-        mMap.animateCamera(CameraUpdateFactory.zoomTo(15), 200, null);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(origin, 15));
     }
-
-    private void enableMyLocationIfPermitted() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.ACCESS_FINE_LOCATION,
-                            Manifest.permission.ACCESS_FINE_LOCATION},
-                    LOCATION_PERMISSION_REQUEST_CODE);
-        } else if (mMap != null) {
-            mMap.setMyLocationEnabled(true);
-        }
-    }
-
-    private void showDefaultLocation() {
-        Toast.makeText(this, "Location permission not granted, " +
-                        "showing default location",
-                Toast.LENGTH_SHORT).show();
-        LatLng redmond = new LatLng(50.11552, 8.68417);
-
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(redmond));
-    }
-
-    public boolean checkUserLocationPermission()
-    {
-        if(ContextCompat.checkSelfPermission(this,Manifest.permission.ACCESS_FINE_LOCATION)!=PackageManager.PERMISSION_GRANTED)
-        {
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.ACCESS_FINE_LOCATION))
-            {
-                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},Request_User_Location_Code);
-            }
-            else
-            {
-                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.ACCESS_FINE_LOCATION},Request_User_Location_Code);
-            }
-            return false;
-        }
-        else
-        {
-            return true;
-        }
-    }
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
-                                           @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case LOCATION_PERMISSION_REQUEST_CODE: {
-                if (grantResults.length > 0
-                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    enableMyLocationIfPermitted();
-                } else {
-                    showDefaultLocation();
-                }
-                return;
-            }
-
-        }
-    }
-
-    private GoogleMap.OnMyLocationButtonClickListener onMyLocationButtonClickListener =
-            new GoogleMap.OnMyLocationButtonClickListener() {
-                @Override
-                public boolean onMyLocationButtonClick() {
-                    mMap.setMinZoomPreference(15);
-                    return false;
-                }
-            };
-
-    private GoogleMap.OnMyLocationClickListener onMyLocationClickListener =
-            new GoogleMap.OnMyLocationClickListener() {
-                @Override
-                public void onMyLocationClick(@NonNull Location location) {
-
-                    mMap.setMinZoomPreference(12);
-
-                    CircleOptions circleOptions = new CircleOptions();
-                    circleOptions.center(new LatLng(location.getLatitude(),
-                            location.getLongitude()));
-
-                    circleOptions.radius(200);
-                    circleOptions.fillColor(Color.RED);
-                    circleOptions.strokeWidth(6);
-
-                    mMap.addCircle(circleOptions);
-                }
-            };
 
     public void showCapsuleList(){
         aController.showCapsules();
@@ -226,6 +135,17 @@ public class Maps extends AppCompatActivity implements
 
             }
         });
+           // textView4.append(content);
+
+            // Creating a marker
+            MarkerOptions markerOptions = new MarkerOptions();
+            LatLng lng = new LatLng(capsule.getLatitude(), capsule.getLongitude());
+            // Setting the position for the marker
+            markerOptions.position(lng);
+
+            // Placing a marker on the touched position
+            mMap.addMarker(markerOptions);
+        }
     }
 
 }

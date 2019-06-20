@@ -68,6 +68,9 @@ public class Register extends AppCompatActivity {
 
                             //  switchScreens(Menu.class, myResponse);
                         }
+                        else{
+                            Toast.makeText(Register.this, "Failed to Register", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 });
 
