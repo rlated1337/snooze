@@ -2,9 +2,11 @@ package com.snooze.snooze;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,6 +21,7 @@ public class CapsuleAdapter extends RecyclerView.Adapter<CapsuleAdapter.ViewHold
 
     public CapsuleAdapter(ArrayList<Capsules> capsule) {
         this.mCapsule = capsule;
+
     }
 
     public interface onItemClickListener{
@@ -32,20 +35,25 @@ public class CapsuleAdapter extends RecyclerView.Adapter<CapsuleAdapter.ViewHold
         public ImageView mImageView;
         public TextView mName;
         public TextView mPrice;
+        public TextView capID;
 
-        public ViewHolder(@NonNull View itemView, final onItemClickListener listener) {
+        public ViewHolder(@NonNull final View itemView, final onItemClickListener listener) {
             super(itemView);
             mImageView = (ImageView) itemView.findViewById(R.id.imageView);
             mName = (TextView) itemView.findViewById(R.id.name);
             mPrice = (TextView) itemView.findViewById(R.id.price);
+            capID = (TextView) itemView.findViewById(R.id.capID);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(listener != null){
                         int position = getAdapterPosition();
+                        Capsules currentItem2 = mCapsule.get(position);
+                        int capsuleID = currentItem2.getId();
+
                         if(position != RecyclerView.NO_POSITION){
-                            listener.onItemClick(position);
+                            listener.onItemClick(capsuleID);
                         }
                     }
                 }
@@ -64,9 +72,13 @@ public class CapsuleAdapter extends RecyclerView.Adapter<CapsuleAdapter.ViewHold
     @Override
     public void onBindViewHolder(@NonNull CapsuleAdapter.ViewHolder viewHolder, int i) {
         Capsules currentItem = mCapsule.get(i);
+        Log.d("CURRENTITEM", currentItem.getId().toString());
+
         viewHolder.mImageView.setImageResource(currentItem.getImageResource());
         viewHolder.mName.setText(currentItem.getName());
         viewHolder.mPrice.setText(currentItem.getPrice() + "€");
+       // System.out.println(currentItem.getId());
+//        viewHolder.capID.setText(currentItem.getId());
     }
 
     @Override

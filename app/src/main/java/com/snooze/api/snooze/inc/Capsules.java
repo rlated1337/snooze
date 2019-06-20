@@ -25,6 +25,7 @@ public class Capsules {
     private int imageResource;
 
 
+
     public Capsules(String name, Double latitude, Double longitude, String ipAddress, Integer price) {
         this.name = name;
         this.latitude = latitude;
@@ -32,10 +33,11 @@ public class Capsules {
         this.ipAddress = ipAddress;
         this.price = price;
     }
-    public Capsules(Integer imageResource, String name, Integer price){
+    public Capsules(Integer imageResource, String name, Integer price, Integer id){
         this.imageResource = imageResource;
         this.name = name;
         this.price = price;
+        this.id = id;
     }
 
     public String getName() {
