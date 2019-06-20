@@ -2,6 +2,7 @@ package com.snooze.model.snooze.controller;
 
 import android.graphics.Paint;
 
+import com.google.gson.JsonElement;
 import com.snooze.api.snooze.ApiConnector;
 import com.snooze.api.snooze.BookingService;
 import com.snooze.api.snooze.CapsulePreferencesService;
@@ -29,6 +30,7 @@ public class AppController {
     private BookingService serviceBooking;
     private String accessToken;
     private DataInterface2 mListener;
+    private DataInterface3 aListener;
 
     public AppController() {
         connect = new ApiConnector();
@@ -66,15 +68,44 @@ public class AppController {
         });
     }
 
+    public void getAvailableCapsules(String capsuleID, String dateTime){
+        accessToken = usercontroller.getUserAccessToken();
+
+        Call<JsonElement> call = service.getAvailableCapsules(capsuleID, accessToken, dateTime);
+
+        call.enqueue(new Callback<JsonElement>() {
+            @Override
+            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+                if(!response.isSuccessful()){
+                    System.out.println("Code: " + response.code());
+                    System.out.println("Message: " + response.message());
+                }
+
+                aListener.responseAvailable(response.body());
+            }
+
+            @Override
+            public void onFailure(Call<JsonElement> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
+    }
+
     public interface DataInterface2 {
         void responseData( List<Capsules> myResponse );
     }
-
 
     public void setOnDataListener(DataInterface2 listener) {
         mListener = listener;
     }
 
+    public interface DataInterface3 {
+        void responseAvailable( JsonElement myResponse );
+    }
+
+    public void setOnDataListener(DataInterface3 listener) {
+        aListener = listener;
+    }
 
     public void showCalender(){
 
