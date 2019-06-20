@@ -1,5 +1,6 @@
 package com.snooze.api.snooze;
 
+import com.google.gson.JsonElement;
 import com.snooze.api.snooze.inc.Bookings;
 import com.snooze.api.snooze.inc.Capsules;
 
@@ -44,6 +45,9 @@ public interface CapsuleService {
 
     @DELETE("Capsules/{id}")
     Call<Void> deleteSpecificCapsule(@Path("id") String id, @Query("access_token") String key);
+
+    @GET("Capsules/{id}/available")
+    Call<JsonElement> getAvailableCapsules(@Path("id") String id, @Query("access_token") String key, @Query("date") String dateTime);
 
     /* CAPSULES/{id}/BOOKINGS */
 
