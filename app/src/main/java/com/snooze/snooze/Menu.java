@@ -44,7 +44,7 @@ public class Menu extends AppCompatActivity {
         btnBookings.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                switchScreensWithoutObject(Bookings.class);
+                switchScreensWithoutObject(Booking.class);
             }
         });
 

@@ -1,21 +1,17 @@
 package com.snooze.snooze;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
-import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.snooze.api.snooze.inc.Bookings;
 import com.snooze.model.snooze.controller.AppController;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Bookings extends AppCompatActivity {
+public class Booking extends AppCompatActivity {
     private Button btn_back;
     private Button btn_history;
     private ScrollView sView_List;

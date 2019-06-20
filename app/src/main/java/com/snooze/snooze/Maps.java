@@ -1,32 +1,20 @@
 package com.snooze.snooze;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.graphics.Color;
 import android.location.Location;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.widget.Button;
-import android.widget.ScrollView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationRequest;
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.CircleOptions;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -120,6 +108,15 @@ public class Maps extends AppCompatActivity implements
         for (int i = 0; i < listCapsules.size(); i++) {
             System.out.println(listCapsules.get(i).getPrice());
             mCapsule.add(new Capsules(R.drawable.snoozelogo,listCapsules.get(i).getName(),listCapsules.get(i).getPrice()));
+
+            // Creating a marker
+            MarkerOptions markerOptions = new MarkerOptions();
+            LatLng lng = new LatLng(listCapsules.get(i).getLatitude(), listCapsules.get(i).getLongitude());
+            // Setting the position for the marker
+            markerOptions.position(lng);
+
+            // Placing a marker on the touched position
+            mMap.addMarker(markerOptions);
         }
     }
 
@@ -135,17 +132,7 @@ public class Maps extends AppCompatActivity implements
 
             }
         });
-           // textView4.append(content);
 
-            // Creating a marker
-            MarkerOptions markerOptions = new MarkerOptions();
-            LatLng lng = new LatLng(capsule.getLatitude(), capsule.getLongitude());
-            // Setting the position for the marker
-            markerOptions.position(lng);
-
-            // Placing a marker on the touched position
-            mMap.addMarker(markerOptions);
-        }
     }
 
 }
