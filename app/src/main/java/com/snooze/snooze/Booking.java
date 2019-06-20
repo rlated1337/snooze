@@ -32,7 +32,7 @@ public class Booking extends AppCompatActivity {
         sView_List = findViewById(R.id.sView_Bookings_BookingList);
         aController = MainActivity.getInstance().getaController();
 
-        /*
+        
         aController.getBookings();
 
         aController.setBookingListener(new AppController.DataInterfaceBookings() {
@@ -41,7 +41,7 @@ public class Booking extends AppCompatActivity {
                 System.out.println(myBookings);
             }
         });
-        */
+
 
 
 
