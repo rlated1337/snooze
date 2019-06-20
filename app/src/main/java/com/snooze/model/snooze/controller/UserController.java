@@ -2,6 +2,7 @@ package com.snooze.model.snooze.controller;
 
 import com.snooze.api.snooze.ApiConnector;
 import com.snooze.api.snooze.SnoozeUsersService;
+import com.snooze.api.snooze.inc.Bookings;
 import com.snooze.api.snooze.inc.Credentials;
 import com.snooze.api.snooze.inc.Session;
 import com.snooze.api.snooze.inc.SnoozeUsers;
@@ -11,6 +12,8 @@ import com.snooze.snooze.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,6 +29,7 @@ public class UserController {
     private static final String accessToken = "GN0tME3nUBa6auETCDju80cAzMSMDaDY791UafudXydp6AwwLfVjEJDDxJTjHEg3";
     private String userAccessToken;
     private DataInterface mListener;
+    private DataInterfaceBookings bListener;
     private AppController aController;
 
     public UserController() {
@@ -150,15 +154,43 @@ public class UserController {
         });
     }
 
+
+    public void getBookings(){
+
+        Call<List<SnoozeUsers>> call = service.getUserData(accessToken);
+
+        call.enqueue(new Callback<List<SnoozeUsers>>() {
+            @Override
+            public void onResponse(Call<List<SnoozeUsers>> call, Response<List<SnoozeUsers>> response) {
+                if(!response.isSuccessful()){
+                    System.out.println("Code: " + response.code());
+                    System.out.println("Message: " + response.message());
+                }
+
+                if (response!=null && response.body() != null && mListener != null) {
+
+                    bListener.responseBookings(response.body());
+
+                }
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<List<SnoozeUsers>> call, Throwable t) {
+                System.out.println(t.getMessage());
+
+            }
+        });
+
+    }
+
     public void executePayment(){
 
     }
 
-    public void userLogin(){
-
-    }
-
-    public void userLockOut(){
+    public void userLogOut(){
 
     }
 
@@ -166,9 +198,18 @@ public class UserController {
         mListener = listener;
     }
 
+    public void setOnBookingListener(DataInterfaceBookings listener) {
+        bListener = listener;
+    }
+
     public interface DataInterface {
         void responseData( JSONObject myResponse );
     }
+
+    public interface DataInterfaceBookings {
+        void responseBookings(List<SnoozeUsers> myBookings);
+    }
+
 
     public String getUserAccessToken() {
         return userAccessToken;
