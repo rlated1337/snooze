@@ -78,7 +78,7 @@ public class LogIn extends AppCompatActivity {
             JSONObject obj = new JSONObject();
             @Override
             public void onClick(View v) {
-                switchScreensWithoutObject(Menu.class);
+                switchScreensWithoutObject(AboutSnooze.class);
             }
         });
     }

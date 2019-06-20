@@ -1,5 +1,6 @@
 package com.snooze.snooze;
 
+import android.icu.text.DateFormat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -19,7 +20,6 @@ import com.snooze.model.snooze.controller.UserController;
 
 import org.json.JSONObject;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -39,6 +39,7 @@ public class Booking extends AppCompatActivity {
     private ArrayList<Bookings> mBookings;
     private List<String> listAmount = new ArrayList<>();
     private List<String> listDate = new ArrayList<>();
+    private List<String> listPeriod = new ArrayList<>();
 
 
 
@@ -66,50 +67,59 @@ public class Booking extends AppCompatActivity {
             public void responseBookings(JsonElement myBookings) {
 
 
-                //buildRecyclerView();
-                getBookings(myBookings.toString());
+
+                setBookings(myBookings.toString());
+                buildRecyclerView();
             }
         });
 
 
 
 
-
-    }
-    public void printBookingsList(){
 
     }
     public void buildRecyclerView(){
-        mLayoutManager = new LinearLayoutManager(getApplicationContext());
-        mAdapter = new BookingsAdapter(mBookings);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-        mRecyclerView.setAdapter(mAdapter);
-
-        mAdapter.setOnClickListener(new BookingsAdapter.onItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-
-            }
-        });
+    mAdapter = new BookingsAdapter(listAmount,listDate,listPeriod,this);
+    mRecyclerView.setAdapter(mAdapter);
+    mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
     }
-    public void getBookings(String jsonString) {
+    public void setBookings(String jsonString) {
 
         JsonElement jelement = new JsonParser().parse(jsonString);
         JsonObject jobject = jelement.getAsJsonObject();
         JsonArray jarray = jobject.getAsJsonArray("bookings");
         String resultAmount,resultDate;
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
 
 
 
         for(int i=0;i<jarray.size();i++){
+            int firstTimeFrame,lastTimeFrame;
+            int countBookings;
+            int period=0;
             JsonObject jsonObject = jarray.get(i).getAsJsonObject();
             resultAmount = jsonObject.get("PayedAmount").toString();
-            listAmount.add(i,resultAmount);
+            listAmount.add(i,resultAmount+" € ");
             resultDate = jsonObject.get("Date").toString();
-            String text = resultDate.format(formatter);
-            System.out.println(text);
+            listDate.add(i,resultDate.substring(1, resultDate.indexOf('T')));
+            firstTimeFrame = Integer.parseInt(jsonObject.get("FirstTimeFrame").toString());
+            lastTimeFrame = Integer.parseInt(jsonObject.get("LastTimeFrame").toString());
+
+            if (firstTimeFrame == lastTimeFrame)
+             {
+                countBookings = firstTimeFrame;
+             }
+            else
+            {
+                countBookings = lastTimeFrame-firstTimeFrame;
+            }
+            while(countBookings>0)
+            {
+                period = period + 20;
+                countBookings--;
+            }
+            listPeriod.add(i,period + " minutes");
+
         }
     }
 }

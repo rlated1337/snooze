@@ -1,74 +1,78 @@
 package com.snooze.snooze;
 
-import android.support.annotation.NonNull;
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.snooze.api.snooze.inc.Bookings;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import static android.support.constraint.Constraints.TAG;
 
 public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHolder> {
-    private ArrayList<Bookings> mBooking;
-    private onItemClickListener mListener;
+    private List<String> listPrice;
+    private List<String> listDate;
+    private List<String> listPeriod;
+    private Context mContext;
 
-    public BookingsAdapter(ArrayList<Bookings> bookings) {
-        this.mBooking = bookings;
-    }
-
-    public interface onItemClickListener {
-        void onItemClick(int position);
-    }
-
-    public void setOnClickListener(onItemClickListener listener) {
-        mListener = listener;
-    }
-
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView mDate;
-        public TextView mPrice;
-
-        public ViewHolder(@NonNull View itemView, final onItemClickListener listener) {
-            super(itemView);
-            mDate = (TextView) itemView.findViewById(R.id.bookings_name);
-            mPrice = (TextView) itemView.findViewById(R.id.bookings_price);
-
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null) {
-                        int position = getAdapterPosition();
-                        if (position != RecyclerView.NO_POSITION) {
-                            listener.onItemClick(position);
-                        }
-                    }
-                }
-            });
-
-        }
-    }
-
-    @NonNull
-    @Override
-    public BookingsAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        View v = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.bookings_row_layout, viewGroup, false);
-        return new ViewHolder(v, mListener);
+    public BookingsAdapter(List<String> listPrice, List<String> listDate,List<String> listPeriod,Context mContext) {
+        this.listPrice = listPrice;
+        this.listDate = listDate;
+        this.listPeriod = listPeriod;
+        this.mContext = mContext;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull BookingsAdapter.ViewHolder viewHolder, int i) {
-        Bookings currentItem = mBooking.get(i);
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bookings_row_layout, parent, false);
+        ViewHolder holder = new ViewHolder(view);
+        return holder;
+    }
 
-        viewHolder.mDate.setText(currentItem.getDate().toString());
-        viewHolder.mPrice.setText(currentItem.getPayedAmount() + "€");
+    @Override
+    public void onBindViewHolder(ViewHolder holder, final int position) {
+        Log.d(TAG, "onBindViewHolder: called.");
+
+        holder.price.setText(listPrice.get(position));
+        holder.date.setText(listDate.get(position));
+        holder.period.setText(listPeriod.get(position));
+        holder.parentLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
     }
 
     @Override
     public int getItemCount() {
-        return mBooking.size();
+        return listDate.size();
     }
+
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        TextView price;
+        TextView date;
+        TextView period;
+        RelativeLayout parentLayout;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+            parentLayout = itemView.findViewById(R.id.parent_layout);
+            date = itemView.findViewById(R.id.bookings_date);
+            price = itemView.findViewById(R.id.bookings_price);
+            period = itemView.findViewById(R.id.bookings_period);
+        }
+    }
+
 }
+
+
