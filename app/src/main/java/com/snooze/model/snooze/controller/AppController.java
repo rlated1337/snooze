@@ -29,8 +29,6 @@ public class AppController {
     private BookingService serviceBooking;
     private String accessToken;
     private DataInterface2 mListener;
-    private DataInterfaceBookings bListener;
-
 
     public AppController() {
         connect = new ApiConnector();
@@ -68,50 +66,15 @@ public class AppController {
         });
     }
 
-    public void getBookings(){
-
-        Call<List<Bookings>> call = serviceBooking.getAllBookings(accessToken);
-
-        call.enqueue(new Callback<List<Bookings>>() {
-            @Override
-            public void onResponse(Call<List<Bookings>> call, Response<List<Bookings>> response) {
-                if(!response.isSuccessful()){
-                    System.out.println("Code: " + response.code());
-                    System.out.println("Message: " + response.message());
-                }
-
-                if (response!=null && response.body() != null && mListener != null) {
-
-                    bListener.responseBookings(response.body());
-
-                }
-
-
-
-            }
-
-            @Override
-            public void onFailure(Call<List<Bookings>> call, Throwable t) {
-                System.out.println(t.getMessage());
-
-            }
-        });
-
-    }
-
     public interface DataInterface2 {
         void responseData( List<Capsules> myResponse );
     }
 
-    public interface DataInterfaceBookings {
-        void responseBookings(List<Bookings> myBookings);
-    }
 
     public void setOnDataListener(DataInterface2 listener) {
         mListener = listener;
     }
 
-    public void setBookingListener(DataInterfaceBookings listener ) { bListener = listener; }
 
     public void showCalender(){
 
