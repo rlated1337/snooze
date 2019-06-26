@@ -70,7 +70,6 @@ public class AppController {
 
     public void getAvailableCapsules(String capsuleID, String dateTime){
         accessToken = usercontroller.getUserAccessToken();
-
         Call<JsonElement> call = service.getAvailableCapsules(capsuleID, accessToken, dateTime);
 
         call.enqueue(new Callback<JsonElement>() {
@@ -90,6 +89,8 @@ public class AppController {
             }
         });
     }
+
+
 
     public interface DataInterface2 {
         void responseData( List<Capsules> myResponse );
