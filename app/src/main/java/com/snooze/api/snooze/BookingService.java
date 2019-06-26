@@ -1,6 +1,7 @@
 package com.snooze.api.snooze;
 
 import com.snooze.api.snooze.inc.Bookings;
+import com.snooze.api.snooze.inc.Capsules;
 
 import java.util.List;
 
@@ -46,8 +47,8 @@ public interface BookingService {
 
     /* BOOKINGS{id}/.... GET/POST */
 
-    //@GET("Booking/{id}/capsule")
-
+    @GET("Booking/{id}/capsule")
+    Call<Capsules> getSpecificCapsuleFromBookingId(@Path("id") String id, @Query("access_token") String key);
 
     @GET("Bookings/{id}/exists")
     Call<Boolean> getBookingExists(@Path("id") String id, @Query("access_token") String key);
