@@ -20,14 +20,18 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHo
     private List<String> listDate;
     private List<String> listPeriod;
     private List<String> listCapsuleName;
+    private List<String> listPin;
+    private List<String> listTime;
     private Context mContext;
 
-    public BookingsAdapter(List<String> listPrice, List<String> listDate,List<String> listPeriod,List<String> listCapsuleName,Context mContext) {
+    public BookingsAdapter(List<String> listPrice, List<String> listDate,List<String> listPeriod,List<String> listCapsuleName,Context mContext,List<String> listPin,List<String> listTime) {
         this.listPrice = listPrice;
         this.listDate = listDate;
         this.listPeriod = listPeriod;
         this.mContext = mContext;
         this.listCapsuleName=listCapsuleName;
+        this.listPin = listPin;
+        this.listTime = listTime;
     }
 
     @Override
@@ -45,6 +49,8 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHo
         holder.date.setText(listDate.get(position));
         holder.period.setText(listPeriod.get(position));
         holder.name.setText(listCapsuleName.get(position));
+        holder.pin.setText(listPin.get(position));
+        holder.time.setText(listTime.get(position));
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -66,6 +72,8 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHo
         TextView date;
         TextView period;
         TextView name;
+        TextView pin;
+        TextView time;
         RelativeLayout parentLayout;
 
         public ViewHolder(View itemView) {
@@ -75,6 +83,8 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHo
             price = itemView.findViewById(R.id.bookings_price);
             period = itemView.findViewById(R.id.bookings_period);
             name = itemView.findViewById(R.id.bookings_capsuleName);
+            pin = itemView.findViewById(R.id.bookings_Pin);
+            time = itemView.findViewById(R.id.bookings_Time);
         }
     }
 
