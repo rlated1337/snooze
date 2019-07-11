@@ -55,6 +55,7 @@ public class UserController {
         connect = new ApiConnector();
         retrofit = connect.getRetrofitInstance();
         service = retrofit.create(SnoozeUsersService.class);
+        bookingService = retrofit.create(BookingService.class);
         aController =  MainActivity.getInstance().getaController();
 
     }
