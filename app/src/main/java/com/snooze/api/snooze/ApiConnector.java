@@ -13,6 +13,7 @@ public class ApiConnector {
 
     public static Retrofit getRetrofitInstance() {
         OkHttpClient okHttpClient = UnsafeOkHttpClient.getUnsafeOkHttpClient();
+
         if (retrofit == null) {
             retrofit = new retrofit2.Retrofit.Builder()
                     .baseUrl(BASE_URL)

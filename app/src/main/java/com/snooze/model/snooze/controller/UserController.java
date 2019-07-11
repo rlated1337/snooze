@@ -2,7 +2,9 @@ package com.snooze.model.snooze.controller;
 
 import android.util.Log;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.snooze.api.snooze.ApiConnector;
 import com.snooze.api.snooze.BookingService;
 import com.snooze.api.snooze.SnoozeUsersService;
@@ -20,6 +22,7 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 
@@ -39,6 +42,7 @@ public class UserController {
     private DataInterface mListener;
     private DataInterfaceBookings bListener;
     private AppController aController;
+    private HashMap<String, String> pinCapsule;
 
     public Integer getUserID() {
         return userID;
@@ -57,6 +61,7 @@ public class UserController {
         service = retrofit.create(SnoozeUsersService.class);
         bookingService = retrofit.create(BookingService.class);
         aController =  MainActivity.getInstance().getaController();
+        pinCapsule = new HashMap<>();
 
     }
 
@@ -194,6 +199,13 @@ public class UserController {
 
 
                     System.out.println(response.body());
+
+                    JsonElement element = response.body();
+
+                    JsonObject obj = element.getAsJsonObject();
+
+                    pinCapsule.put(obj.get("Capsule_id").toString(), obj.get("pin").toString());
+
                     bListener.responseBookings(response.body());
 
                 }
@@ -218,8 +230,10 @@ public class UserController {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'"); // Quoted "Z" to indicate UTC, no timezone offset
         df.setTimeZone(tz);
         String nowAsISO = df.format(new Date());
+        System.out.println(nowAsISO);
 
-        Bookings booking = new Bookings(this.getUserID(),capsuleID,0, nowAsISO, startTimeFrame, endTimeFrame, "fh", (endTimeFrame - startTimeFrame) + 1, true, "test@gmail.com", 2, nowAsISO, paymentID, 0);
+        Bookings booking = new Bookings(this.getUserID(),capsuleID,"string", nowAsISO, startTimeFrame, endTimeFrame, "fh", (endTimeFrame - startTimeFrame) + 1, true, "mobapptest@gmail.com", 2, nowAsISO, paymentID);
+
         Log.d("Booking Object", booking.toString());
         Log.d("Booking Date", booking.getDate());
         Log.d("Access Token", userAccessToken);

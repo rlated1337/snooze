@@ -13,7 +13,7 @@ public class Bookings {
     private Integer capsule_id;
 
     @SerializedName("Pin")
-    private Integer pin;
+    private String pin;
 
     @SerializedName("Date")
     private String date;
@@ -57,9 +57,9 @@ public class Bookings {
     private Integer id;
 
 
-    public Bookings(Integer snoozeuser_id, Integer capsule_id, Integer pin, String date, Integer firstTimeFrame,
+    public Bookings(Integer snoozeuser_id, Integer capsule_id, String pin, String date, Integer firstTimeFrame,
                     Integer lastTimeFrame, String vendor, Integer amount, Boolean isVerified, String payerEmail,
-                    Integer payedAmount, String payedDate, String paymentId, Integer id) {
+                    Integer payedAmount, String payedDate, String paymentId) {
         this.snoozeuser_id = snoozeuser_id;
         this.capsule_id = capsule_id;
         this.pin = pin;
@@ -73,8 +73,6 @@ public class Bookings {
         this.payedAmount = payedAmount;
         this.payedDate = payedDate;
         this.paymentId = paymentId;
-        this.id = id;
-
     }
 
     public Integer getSnoozeuser_id() {
@@ -93,11 +91,11 @@ public class Bookings {
         this.capsule_id = capsule_id;
     }
 
-    public Integer getPin() {
+    public String getPin() {
         return pin;
     }
 
-    public void setPin(Integer pin) {
+    public void setPin(String pin) {
         this.pin = pin;
     }
 

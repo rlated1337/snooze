@@ -133,12 +133,14 @@ public class Booking extends AppCompatActivity {
             {
                 countBookings = lastTimeFrame-firstTimeFrame;
             }
+
             while(countBookings>0)
             {
                 period = period + 20;
                 countBookings--;
             }
-            listPeriod.add(i,period + " minutes");
+
+            listPeriod.add(i,"20" + " minutes");
 
         }
     }
