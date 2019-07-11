@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">snooze</string>
     <string name="title_activity_maps">Map</string>
+    <string name="btn_Settings_Back">BACK</string>
+    <string name="btnSubmit">SUBMIT</string>
+    <string name="txtBedLegAngle">Bed Leg Angle</string>
+    <string name="txtBedBackAngle">Bed Back Angle</string>
+    <string name="txtLightLevel">Light Level</string>
+    <string name="txtVolumenLevel">Volumen Level</string>
+    <string name="txtLightColor">Light Color</string>
+    <string name="txtBedMidAngle">Bed Mid Angle</string>
 </resources>

@@ -2,8 +2,9 @@ package com.snooze.model.snooze.controller;
 
 import com.google.gson.JsonElement;
 import com.snooze.api.snooze.ApiConnector;
+import com.snooze.api.snooze.CapsulePreferencesService;
 import com.snooze.api.snooze.SnoozeUsersService;
-import com.snooze.api.snooze.inc.Bookings;
+import com.snooze.api.snooze.inc.CapsulePreferences;
 import com.snooze.api.snooze.inc.Credentials;
 import com.snooze.api.snooze.inc.Session;
 import com.snooze.api.snooze.inc.SnoozeUsers;
@@ -13,8 +14,6 @@ import com.snooze.snooze.MainActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -26,6 +25,7 @@ public class UserController {
     private User user;
     private Retrofit retrofit;
     private SnoozeUsersService service;
+    private CapsulePreferencesService capsulePreferencesService;
     private ApiConnector connect;
     private String userAccessToken;
     private DataInterface mListener;
@@ -37,6 +37,7 @@ public class UserController {
         connect = new ApiConnector();
         retrofit = connect.getRetrofitInstance();
         service = retrofit.create(SnoozeUsersService.class);
+        capsulePreferencesService = retrofit.create(CapsulePreferencesService.class);
         aController =  MainActivity.getInstance().getaController();
 
     }
@@ -69,8 +70,6 @@ public class UserController {
                     }
 
                     mListener.responseData(obj);
-
-
 
                 }
 
@@ -221,6 +220,34 @@ public class UserController {
 
     public void setUserAccessToken(String userAccessToken) {
         this.userAccessToken = userAccessToken;
+    }
+
+    public void setCapsulePrefernces(Integer snoozeuser_id, Integer bedLegAngle, Integer bedBackAngle, Integer lightLevel,
+                                     Integer volumenLevel, String lightColor, Integer bedMidAngle){
+
+        CapsulePreferences capsulePreferences = new CapsulePreferences(this.user.getId(),bedLegAngle,bedBackAngle,lightLevel,
+                volumenLevel,lightColor,bedMidAngle);
+
+        Call<String> call = capsulePreferencesService.postCapsulePreferences(userAccessToken,capsulePreferences);
+
+        call.enqueue(new Callback<String>() {
+            @Override
+            public void onResponse(Call<String> call, Response<String> response) {
+                if(!response.isSuccessful()){
+                    System.out.println("Code: " + response.code());
+                    System.out.println("Message: " + response.message());
+                }
+
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<String> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
     }
 
 
