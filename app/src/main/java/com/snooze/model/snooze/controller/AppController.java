@@ -7,6 +7,7 @@ import com.snooze.api.snooze.ApiConnector;
 import com.snooze.api.snooze.BookingService;
 import com.snooze.api.snooze.CapsulePreferencesService;
 import com.snooze.api.snooze.CapsuleService;
+import com.snooze.api.snooze.Payment.PaymentHandler;
 import com.snooze.api.snooze.inc.Bookings;
 import com.snooze.api.snooze.inc.Capsules;
 import com.snooze.api.snooze.inc.SnoozeUsers;
@@ -32,6 +33,7 @@ public class AppController {
     private DataInterface2 mListener;
     private DataInterface3 aListener;
 
+
     public AppController() {
         connect = new ApiConnector();
         retrofit = connect.getRetrofitInstance();
@@ -42,6 +44,8 @@ public class AppController {
 
         accessToken = usercontroller.getUserAccessToken();
         System.out.println("ACCESS TOKEN2: " + accessToken);
+
+
     }
 
     public void showCapsules(){
@@ -70,7 +74,6 @@ public class AppController {
 
     public void getAvailableCapsules(String capsuleID, String dateTime){
         accessToken = usercontroller.getUserAccessToken();
-
         Call<JsonElement> call = service.getAvailableCapsules(capsuleID, accessToken, dateTime);
 
         call.enqueue(new Callback<JsonElement>() {
@@ -90,6 +93,8 @@ public class AppController {
             }
         });
     }
+
+
 
     public interface DataInterface2 {
         void responseData( List<Capsules> myResponse );

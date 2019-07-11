@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
+import com.snooze.api.snooze.Payment.PaymentHandler;
 import com.snooze.api.snooze.inc.Session;
 
 import org.json.JSONObject;
@@ -18,6 +19,7 @@ public class Menu extends AppCompatActivity {
     private Button btnSettings;
     private Session session;
     private JSONObject json_object;
+    private PaymentHandler payment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class Menu extends AppCompatActivity {
         btnAccount = findViewById(R.id.btn_menu_account);
         btnBookings = findViewById(R.id.btn_menu_bookings);
         btnSettings = findViewById(R.id.btn_menu_Settings);
+
 
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override

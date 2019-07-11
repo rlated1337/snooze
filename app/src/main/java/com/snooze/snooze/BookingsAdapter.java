@@ -19,13 +19,15 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHo
     private List<String> listPrice;
     private List<String> listDate;
     private List<String> listPeriod;
+    private List<String> listCapsuleName;
     private Context mContext;
 
-    public BookingsAdapter(List<String> listPrice, List<String> listDate,List<String> listPeriod,Context mContext) {
+    public BookingsAdapter(List<String> listPrice, List<String> listDate,List<String> listPeriod,List<String> listCapsuleName,Context mContext) {
         this.listPrice = listPrice;
         this.listDate = listDate;
         this.listPeriod = listPeriod;
         this.mContext = mContext;
+        this.listCapsuleName=listCapsuleName;
     }
 
     @Override
@@ -42,6 +44,7 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHo
         holder.price.setText(listPrice.get(position));
         holder.date.setText(listDate.get(position));
         holder.period.setText(listPeriod.get(position));
+        holder.name.setText(listCapsuleName.get(position));
         holder.parentLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,6 +65,7 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHo
         TextView price;
         TextView date;
         TextView period;
+        TextView name;
         RelativeLayout parentLayout;
 
         public ViewHolder(View itemView) {
@@ -70,6 +74,7 @@ public class BookingsAdapter extends RecyclerView.Adapter<BookingsAdapter.ViewHo
             date = itemView.findViewById(R.id.bookings_date);
             price = itemView.findViewById(R.id.bookings_price);
             period = itemView.findViewById(R.id.bookings_period);
+            name = itemView.findViewById(R.id.bookings_capsuleName);
         }
     }
 
