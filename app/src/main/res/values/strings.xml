@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">snooze</string>
     <string name="title_activity_maps">Map</string>
+    <string name="about_snooze">back</string>
+    <string name="description_txt1">Sleepy?</string>
+    <string name="description_txt2">You don´t have to be!
+Our sleeping capsules, in your university will bringing your learning capabilities on a new level. Just 20 min are enough to get your head straight and your mind focused again. </string>
+    <string name="description_txt3">What you can do inside the capsule?</string>
+    <string name="description_txt4">Well we hope you will sleep, therefore you thought about possibilities for you to customize your experience. Configure your setting or lying position. Get your music playing, and enjoy the play of light. </string>
+    <string name="description_txt5">What are the advantages in comparison to sleeping outside of your capsules?</string>
+    <string name="description_txt6">Lets face it, in germany we don´t have a siesta culture, sleepy people look like lazy, not as hard working. Besides the privacy not to be looked at, its easier to nap in a quiet  and dark environment, you can truely listing freely to your music just like home.</string>
+    <string name="description_txt7">Solutions</string>
+    <string name="description_txt8">Provide the user a place to relax, sleep and recover</string>
 </resources>
