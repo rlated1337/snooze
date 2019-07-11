@@ -5,9 +5,20 @@ public class RowItem {
     private String text;
     private Boolean available;
 
-    RowItem(String text2, Boolean available2){
+    public Integer getTimeFrame() {
+        return timeFrame;
+    }
+
+    public void setTimeFrame(Integer timeFrame) {
+        this.timeFrame = timeFrame;
+    }
+
+    private Integer timeFrame;
+
+    RowItem(String text2, Boolean available2, Integer timeFrame){
         this.text = text2;
         this.available = available2;
+        this.timeFrame = timeFrame;
     }
 
     public String getText() {

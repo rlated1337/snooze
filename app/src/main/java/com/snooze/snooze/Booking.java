@@ -1,13 +1,17 @@
 package com.snooze.snooze;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.icu.text.DateFormat;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
+import android.widget.Toast;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -20,6 +24,7 @@ import com.snooze.api.snooze.inc.SnoozeUsers;
 import com.snooze.model.snooze.controller.AppController;
 import com.snooze.model.snooze.controller.UserController;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 
@@ -137,6 +142,7 @@ public class Booking extends AppCompatActivity {
 
         }
     }
+
 
     private static String removeLastChar(String str) {
         return str.substring(0, str.length() - 1);

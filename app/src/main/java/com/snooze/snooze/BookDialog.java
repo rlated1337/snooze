@@ -1,8 +1,11 @@
 package com.snooze.snooze;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatDialogFragment;
 import android.util.Log;
@@ -15,8 +18,20 @@ import android.widget.Button;
 import android.widget.CalendarView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.braintreepayments.api.BraintreeFragment;
+import com.braintreepayments.api.PayPal;
+import com.braintreepayments.api.dropin.DropInRequest;
+import com.braintreepayments.api.exceptions.InvalidArgumentException;
+import com.braintreepayments.api.interfaces.BraintreeErrorListener;
+import com.braintreepayments.api.interfaces.ConfigurationListener;
+import com.braintreepayments.api.interfaces.PaymentMethodNonceCreatedListener;
+import com.braintreepayments.api.models.Configuration;
+import com.braintreepayments.api.models.PayPalRequest;
+import com.braintreepayments.api.models.PaymentMethodNonce;
 import com.google.gson.JsonElement;
+import com.snooze.api.snooze.Payment.PaymentHandler;
 import com.snooze.model.snooze.controller.AppController;
 
 import org.json.JSONException;
@@ -35,8 +50,10 @@ import java.util.List;
 import java.util.TimeZone;
 
 import static android.R.layout.simple_spinner_item;
+import static lib.android.paypal.com.magnessdk.network.c.v;
 
 public class BookDialog extends AppCompatDialogFragment {
+    private static final int REQUEST_CODE = 1;
     private  Spinner spinner;
     private TextView txtView;
     private ArrayList<RowItem> rowList;
@@ -44,6 +61,10 @@ public class BookDialog extends AppCompatDialogFragment {
     private AppController aController;
     private static Integer TIME_FRAME_AMOUNT = 27;
     private SparseArray<String> timeFrameTranslation;
+    private Button payButton;
+    private String clickedItem;
+    private Integer clickedItemNo;
+    private dialogListener listener;
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -52,12 +73,14 @@ public class BookDialog extends AppCompatDialogFragment {
         super.onCreate(savedInstanceState);
         String id = getArguments().getString("capID");
 
+
         System.out.println("ID OF CAP: " + id);
 
         rowList = new ArrayList<>();
         initTimeFrameMap();
 
         aController = MainActivity.getInstance().getaController();
+
 
         TimeZone tz = TimeZone.getTimeZone("UTC");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'"); // Quoted "Z" to indicate UTC, no timezone offset
@@ -70,8 +93,6 @@ public class BookDialog extends AppCompatDialogFragment {
             public void responseAvailable(JsonElement capsules) {
                 System.out.println("FRAMES FOR CAP");
                 System.out.println(capsules.toString());
-
-
                 initList(capsules);
             }
         });
@@ -82,18 +103,21 @@ public class BookDialog extends AppCompatDialogFragment {
 
         builder.setView(view)
                 .setTitle("Book")
+                .setPositiveButton("BOOK", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        listener.applyTexts(clickedItem, clickedItemNo);
+
+                    }
+                })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
                     }
-                })
-                .setPositiveButton("Book", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
                 });
+
+
 
 
         txtView = view.findViewById(R.id.textView4);
@@ -105,11 +129,14 @@ public class BookDialog extends AppCompatDialogFragment {
         adapter = new SpinnerAdapter(this.getActivity(), rowList);
         spinner.setAdapter(adapter);
 
+
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 RowItem item = (RowItem) parent.getItemAtPosition(position);
-                String clickedItem = item.getText();
+                clickedItem = item.getText();
+                clickedItemNo = item.getTimeFrame();
+
                 System.out.println(clickedItem);
             }
 
@@ -119,15 +146,43 @@ public class BookDialog extends AppCompatDialogFragment {
             }
         });
 
+
+
+
         return builder.create();
+    }
+
+    @Override
+    public void onAttach(Context context){
+        super.onAttach(context);
+
+        try{
+            listener = (dialogListener) context;
+        }
+        catch(ClassCastException e){
+            throw new ClassCastException(context.toString() + " must implement dialogListener");
+        }
+
+    }
+
+    public interface dialogListener{
+        void applyTexts(String timeFrame, Integer timeFrameNo);
+    }
+
+
+    public void setupBraintreeAndStartExpressCheckout(BraintreeFragment mBraintreeFragment, String token) {
+        System.out.println("express checkout");
+
+        PayPalRequest request = new PayPalRequest("1")
+                .currencyCode("EUR")
+                .intent(PayPalRequest.INTENT_AUTHORIZE);
+        PayPal.requestOneTimePayment(mBraintreeFragment, request);
     }
 
     private void initList(JsonElement capsules) {
         if(capsules == null){
-            rowList.add(new RowItem("TIME SLOT  1", true));
-            rowList.add(new RowItem("TIME SLOT  2", true));
-            rowList.add(new RowItem("TIME SLOT  3", true));
-            rowList.add(new RowItem("TIME SLOT  4", true));
+            rowList.add(new RowItem("CHOOSE A TIMESLOT", true, 1));
+
         }
         else{
             rowList.clear();
@@ -147,12 +202,12 @@ public class BookDialog extends AppCompatDialogFragment {
                     Log.d("test", timeFrameTranslation.get(i));
 
                     if(String.valueOf(jsonMembers).equals("true")){
-                        rowList.add(new RowItem(timeFrameTranslation.get(i), true));
+                        rowList.add(new RowItem(timeFrameTranslation.get(i), true, i));
                         Log.d("TIMEFRAME TRUE " + i, String.valueOf(jsonMembers));
                     }
                     else{
                         // DISABLED ANZEIGE {not verfügbare Termine}
-                        rowList.add(new RowItem(timeFrameTranslation.get(i), false));
+                        rowList.add(new RowItem(timeFrameTranslation.get(i), false, i));
                         Log.d("TIMEFRAME FALSE " + i, String.valueOf(jsonMembers));
                     }
 
@@ -218,4 +273,6 @@ public class BookDialog extends AppCompatDialogFragment {
 
 
     }
+
+
 }

@@ -2,6 +2,7 @@ package com.snooze.model.snooze.controller;
 
 import com.google.gson.JsonElement;
 import com.snooze.api.snooze.ApiConnector;
+import com.snooze.api.snooze.BookingService;
 import com.snooze.api.snooze.SnoozeUsersService;
 import com.snooze.api.snooze.inc.Bookings;
 import com.snooze.api.snooze.inc.Credentials;
@@ -14,7 +15,11 @@ import com.snooze.snooze.MainActivity;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,10 +32,21 @@ public class UserController {
     private Retrofit retrofit;
     private SnoozeUsersService service;
     private ApiConnector connect;
+    private BookingService bookingService;
     private String userAccessToken;
     private DataInterface mListener;
     private DataInterfaceBookings bListener;
     private AppController aController;
+
+    public Integer getUserID() {
+        return userID;
+    }
+
+    public void setUserID(Integer userID) {
+        this.userID = userID;
+    }
+
+    private Integer userID;
 
     public UserController() {
         /* CONNECTION TO API */
@@ -138,6 +154,7 @@ public class UserController {
 
                     mListener.responseData(obj);
                     setUserAccessToken(response.body().getId());
+                    setUserID(Integer.parseInt(response.body().getUserId()));
                     System.out.println("ACCESS TOKEN: " + getUserAccessToken());
                 }
 
@@ -158,6 +175,7 @@ public class UserController {
     public void getBookings(){
         System.out.println("GET BOOKINGS");
         System.out.println(userAccessToken);
+
         Call<JsonElement> call = service.getUserData(userAccessToken);
 
         call.enqueue(new Callback<JsonElement>() {
@@ -190,9 +208,48 @@ public class UserController {
 
     }
 
-    public void executePayment(){
+    public void placeBooking(String successPaypal, String paymentID, Integer capsuleID, Integer startTimeFrame, Integer endTimeFrame){
+        System.out.println("PLACE BOOKINGS");
+        System.out.println(userAccessToken);
 
+        TimeZone tz = TimeZone.getTimeZone("UTC");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'"); // Quoted "Z" to indicate UTC, no timezone offset
+        df.setTimeZone(tz);
+        String nowAsISO = df.format(new Date());
+
+        Bookings booking = new Bookings(this.getUserID(),capsuleID,0, nowAsISO, startTimeFrame, endTimeFrame, "string", 2, true, "test@gmail.com", 2, nowAsISO);
+
+        Call<Bookings> call = bookingService.postBooking(userAccessToken, booking);
+
+        call.enqueue(new Callback<Bookings>() {
+            @Override
+            public void onResponse(Call<Bookings> call, Response<Bookings> response) {
+
+                if(!response.isSuccessful()){
+                    System.out.println("Code: " + response.code());
+                    System.out.println("Message: " + response.message());
+                }
+
+                if (response!=null && response.body() != null && mListener != null) {
+
+
+                    System.out.println(response.body());
+                    //bListener.responseBookings(response.body());
+
+                }
+
+
+
+            }
+
+            @Override
+            public void onFailure(Call<Bookings> call, Throwable t) {
+                System.out.println(t.getMessage());
+
+            }
+        });
     }
+
 
     public void userLogOut(){
 
