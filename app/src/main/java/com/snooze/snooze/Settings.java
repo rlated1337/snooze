@@ -28,6 +28,8 @@ public class Settings extends AppCompatActivity {
     private SeekBar skbBedLegAngle;
     private SeekBar skbBedBackAngle;
     private SeekBar skbBedMidAngle;
+    private SeekBar skbLightLevel;
+    private SeekBar skbVolumenLevel;
     private UserController uController;
 
     @Override
@@ -56,6 +58,8 @@ public class Settings extends AppCompatActivity {
         skbBedLegAngle = findViewById(R.id.skbBedLegAngle);
         skbBedBackAngle = findViewById(R.id.skbBedBackAngle);
         skbBedMidAngle = findViewById(R.id.skbBedMidAngle);
+        skbLightLevel = findViewById(R.id.skbLightLevel);
+        skbVolumenLevel = findViewById(R.id.skbVolumenLevel);
 
 
         skbBedLegAngle.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -96,6 +100,40 @@ public class Settings extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 edtBedMidAngleNumber.setText(String.valueOf(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        skbLightLevel.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                edtLightLevel.setText(String.valueOf(progress));
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        skbVolumenLevel.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                edtVolumenLevel.setText(String.valueOf(progress));
             }
 
             @Override
@@ -165,6 +203,46 @@ public class Settings extends AppCompatActivity {
                 if (s.length() > 0) {
                     skbBedMidAngle.setProgress(Integer.parseInt(s.toString()));
                     edtBedMidAngleNumber.setSelection(edtBedMidAngleNumber.getText().length());
+                }
+            }
+        });
+
+        edtLightLevel.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0) {
+                    skbLightLevel.setProgress(Integer.parseInt(s.toString()));
+                    edtLightLevel.setSelection(edtLightLevel.getText().length());
+                }
+            }
+        });
+
+        edtVolumenLevel.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (s.length() > 0) {
+                    skbVolumenLevel.setProgress(Integer.parseInt(s.toString()));
+                    edtVolumenLevel.setSelection(edtVolumenLevel.getText().length());
                 }
             }
         });
