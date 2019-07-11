@@ -42,13 +42,24 @@ public class Bookings {
     @SerializedName("PayedDate")
     private String payedDate;
 
+    public String getPaymentId() {
+        return paymentId;
+    }
+
+    public void setPaymentId(String paymentId) {
+        this.paymentId = paymentId;
+    }
+
+    @SerializedName("Payment_id")
+    private String paymentId;
+
     @SerializedName("id")
     private Integer id;
 
 
     public Bookings(Integer snoozeuser_id, Integer capsule_id, Integer pin, String date, Integer firstTimeFrame,
                     Integer lastTimeFrame, String vendor, Integer amount, Boolean isVerified, String payerEmail,
-                    Integer payedAmount, String payedDate) {
+                    Integer payedAmount, String payedDate, String paymentId, Integer id) {
         this.snoozeuser_id = snoozeuser_id;
         this.capsule_id = capsule_id;
         this.pin = pin;
@@ -61,6 +72,8 @@ public class Bookings {
         this.payerEmail = payerEmail;
         this.payedAmount = payedAmount;
         this.payedDate = payedDate;
+        this.paymentId = paymentId;
+        this.id = id;
 
     }
 

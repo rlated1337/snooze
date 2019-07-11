@@ -1,5 +1,7 @@
 package com.snooze.model.snooze.controller;
 
+import android.util.Log;
+
 import com.google.gson.JsonElement;
 import com.snooze.api.snooze.ApiConnector;
 import com.snooze.api.snooze.BookingService;
@@ -210,20 +212,22 @@ public class UserController {
 
     public void placeBooking(String successPaypal, String paymentID, Integer capsuleID, Integer startTimeFrame, Integer endTimeFrame){
         System.out.println("PLACE BOOKINGS");
-        System.out.println(userAccessToken);
 
         TimeZone tz = TimeZone.getTimeZone("UTC");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'"); // Quoted "Z" to indicate UTC, no timezone offset
         df.setTimeZone(tz);
         String nowAsISO = df.format(new Date());
 
-        Bookings booking = new Bookings(this.getUserID(),capsuleID,0, nowAsISO, startTimeFrame, endTimeFrame, "string", 2, true, "test@gmail.com", 2, nowAsISO);
+        Bookings booking = new Bookings(this.getUserID(),capsuleID,0, nowAsISO, startTimeFrame, endTimeFrame, "fh", (endTimeFrame - startTimeFrame) + 1, true, "test@gmail.com", 2, nowAsISO, paymentID, 0);
+        Log.d("Booking Object", booking.toString());
+        Log.d("Booking Date", booking.getDate());
+        Log.d("Access Token", userAccessToken);
 
-        Call<Bookings> call = bookingService.postBooking(userAccessToken, booking);
+        Call<JsonElement> call = bookingService.postBooking(userAccessToken, booking);
 
-        call.enqueue(new Callback<Bookings>() {
+        call.enqueue(new Callback<JsonElement>() {
             @Override
-            public void onResponse(Call<Bookings> call, Response<Bookings> response) {
+            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
 
                 if(!response.isSuccessful()){
                     System.out.println("Code: " + response.code());
@@ -243,7 +247,7 @@ public class UserController {
             }
 
             @Override
-            public void onFailure(Call<Bookings> call, Throwable t) {
+            public void onFailure(Call<JsonElement> call, Throwable t) {
                 System.out.println(t.getMessage());
 
             }

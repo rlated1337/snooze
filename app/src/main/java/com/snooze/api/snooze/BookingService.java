@@ -1,5 +1,6 @@
 package com.snooze.api.snooze;
 
+import com.google.gson.JsonElement;
 import com.snooze.api.snooze.inc.Bookings;
 import com.snooze.api.snooze.inc.Capsules;
 
@@ -23,7 +24,7 @@ public interface BookingService {
     Call<List<Bookings>> getAllBookings(@Query("access_token") String key);
 
     @POST("Bookings")
-    Call<Bookings> postBooking(@Query("access_token") String key, @Body Bookings booking);
+    Call<JsonElement> postBooking(@Query("access_token") String key, @Body Bookings booking);
 
     @PUT("Bookings")
     Call<Bookings> putBooking(@Query("access_token") String key, @Body Bookings booking);

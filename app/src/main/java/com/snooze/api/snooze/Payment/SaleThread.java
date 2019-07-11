@@ -45,7 +45,7 @@ public class SaleThread implements Runnable {
         Log.d("Nonce", nonce);
 
         TransactionRequest request = new TransactionRequest()
-                .amount(new BigDecimal("1.00"))
+                .amount(new BigDecimal("2.00"))
                 .paymentMethodNonce(nonce)
                 .options()
                 .submitForSettlement(true)
@@ -53,13 +53,9 @@ public class SaleThread implements Runnable {
 
         Result<Transaction> saleResult = PaymentHandler.getGateway().transaction().sale(request);
 
-        Log.d("Sale result", saleResult.toString());
-
         if (saleResult.isSuccess()) {
             Transaction transaction = saleResult.getTarget();
-            System.out.println("Success ID: " + transaction.getId());
-
-            this.setPaymentID(transaction.getId());
+            this.setPaymentID(transaction.getPayPalDetails().getAuthorizationId());
             this.setSuccess(true);
         } else {
             System.out.println("Message: " + saleResult.getMessage());
