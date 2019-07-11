@@ -22,11 +22,11 @@
         android:id="@+id/edtLightLevel"
         android:layout_width="60dp"
         android:layout_height="41dp"
-        android:layout_marginEnd="168dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
         android:ems="10"
         android:inputType="number"
-        android:textSize="14sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/edtVolumenLevel"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -34,11 +34,11 @@
         android:id="@+id/edtVolumenLevel"
         android:layout_width="60dp"
         android:layout_height="41dp"
-        android:layout_marginEnd="168dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
         android:ems="10"
         android:inputType="number"
-        android:textSize="14sp"
+        android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/edtLightColor"
         app:layout_constraintEnd_toEndOf="parent" />
 
@@ -46,12 +46,12 @@
         android:id="@+id/edtLightColor"
         android:layout_width="60dp"
         android:layout_height="41dp"
-        android:layout_marginEnd="168dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="32dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:textSize="14sp"
-        app:layout_constraintBottom_toTopOf="@+id/skbBedMidAngle"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/edtBedMidAngleNumber"
         app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
@@ -59,7 +59,7 @@
         android:layout_width="145dp"
         android:layout_height="41dp"
         android:layout_marginStart="24dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="32dp"
         android:text="@string/txtBedLegAngle"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/txtBedBackAngle"
@@ -125,7 +125,7 @@
         android:text="@string/txtLightLevel"
         android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/txtVolumenLevel"
-        app:layout_constraintEnd_toStartOf="@+id/edtVolumenLevel"
+        app:layout_constraintEnd_toStartOf="@+id/edtLightLevel"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -149,7 +149,7 @@
         android:layout_height="41dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="15dp"
-        android:layout_marginBottom="28dp"
+        android:layout_marginBottom="32dp"
         android:max="180"
         app:layout_constraintBottom_toTopOf="@+id/skbBedBackAngle"
         app:layout_constraintEnd_toStartOf="@+id/edtBedLegAngleNumber"
@@ -183,33 +183,33 @@
         android:id="@+id/edtBedLegAngleNumber"
         android:layout_width="60dp"
         android:layout_height="41dp"
-        android:layout_marginTop="188dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/edtBedBackAngleNumber"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
         android:id="@+id/edtBedBackAngleNumber"
         android:layout_width="60dp"
         android:layout_height="41dp"
-        android:layout_marginTop="29dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtBedLegAngleNumber" />
+        app:layout_constraintBottom_toTopOf="@+id/edtLightLevel"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <EditText
         android:id="@+id/edtBedMidAngleNumber"
         android:layout_width="60dp"
         android:layout_height="41dp"
-        android:layout_marginTop="32dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="140dp"
         android:ems="10"
         android:inputType="number"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/edtLightColor" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

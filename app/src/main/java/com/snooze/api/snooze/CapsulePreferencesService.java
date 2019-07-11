@@ -19,16 +19,19 @@ public interface CapsulePreferencesService {
     Call<List<CapsulePreferences>> getAllCapsulePreferences(@Query("access_token") String key);
 
     @POST("CapsulePreferences")
-    Call<String> postCapsulePreferences(@Query("access_token") String key, @Body CapsulePreferences capsulePreferences);
+    Call<CapsulePreferences> postCapsulePreferences(@Query("access_token") String key, @Body CapsulePreferences capsulePreferences);
+
+    @PATCH("CapsulePreferences")
+    Call<CapsulePreferences> patchCapsulePreferences(@Query("access_token") String key, @Body CapsulePreferences capsulePreferences);
 
     @GET("CapsulePreferences/{id}")
-    Call<String> getSpecificPreferences (@Path("id") String id, @Query("access_token") String key);
+    Call<CapsulePreferences> getSpecificPreferences (@Path("id") String id, @Query("access_token") String key);
 
     @PATCH("CapsulePreferences/{id}")
-    Call<String> patchSpecificPreferences (@Path("id") String id, @Query("access_token") String key, @Body CapsulePreferences capsulePreferences);
+    Call<CapsulePreferences> patchSpecificPreferences (@Path("id") String id, @Query("access_token") String key, @Body CapsulePreferences capsulePreferences);
 
     @PUT("CapsulePreferences/{id}")
-    Call<String> putSpecificPreferences (@Path("id") String id, @Query("access_token") String key, @Body CapsulePreferences capsulePreferences);
+    Call<CapsulePreferences> putSpecificPreferences (@Path("id") String id, @Query("access_token") String key, @Body CapsulePreferences capsulePreferences);
 
 
 

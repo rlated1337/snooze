@@ -283,30 +283,62 @@ public class UserController {
         this.userAccessToken = userAccessToken;
     }
 
-    public void setCapsulePrefernces(Integer snoozeuser_id, Integer bedLegAngle, Integer bedBackAngle, Integer lightLevel,
+    public void setCapsulePreferences(Integer bedLegAngle, Integer bedBackAngle, Integer lightLevel,
                                      Integer volumenLevel, String lightColor, Integer bedMidAngle){
 
         CapsulePreferences capsulePreferences = new CapsulePreferences(this.getUserID(),bedLegAngle,bedBackAngle,lightLevel,
                 volumenLevel,lightColor,bedMidAngle);
 
-        Call<String> call = capsulePreferencesService.postCapsulePreferences(userAccessToken,capsulePreferences);
+        Call<CapsulePreferences> call = capsulePreferencesService.patchCapsulePreferences(userAccessToken,capsulePreferences);
 
-        call.enqueue(new Callback<String>() {
+        call.enqueue(new Callback<CapsulePreferences>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<CapsulePreferences> call, Response<CapsulePreferences> response) {
                 if(!response.isSuccessful()){
                     System.out.println("Code: " + response.code());
                     System.out.println("Message: " + response.message());
                 }
 
-                
+                if (response!=null && response.body() != null && mListener != null) {
+
+
+                    System.out.println(response.body());
+                    //bListener.responseBookings(response.body());
+
+                }
+
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<CapsulePreferences> call, Throwable t) {
                 System.out.println(t.getMessage());
             }
         });
+    }
+
+    public void getCapsulePreferencesById(){
+        Call<JsonElement> call = service.getUserData(userAccessToken);
+
+        call.enqueue(new Callback<JsonElement>() {
+            @Override
+            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+                if(!response.isSuccessful()){
+                    System.out.println("Code: " + response.code());
+                    System.out.println("Message: " + response.message());
+                }
+
+                if (response!=null && response.body() != null && mListener != null) {
+                    System.out.println(response.body());
+                    bListener.responseBookings(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonElement> call, Throwable t) {
+
+            }
+        });
+
     }
 
 
