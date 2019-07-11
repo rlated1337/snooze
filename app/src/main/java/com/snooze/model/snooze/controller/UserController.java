@@ -1,5 +1,7 @@
 package com.snooze.model.snooze.controller;
 
+import android.util.Log;
+
 import com.google.gson.JsonElement;
 import com.snooze.api.snooze.ApiConnector;
 import com.snooze.api.snooze.BookingService;
@@ -28,6 +30,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class UserController {
+    private SnoozeUsers sUser;
     private UserService userservice;
     private User user;
     private Retrofit retrofit;
@@ -57,23 +60,25 @@ public class UserController {
         service = retrofit.create(SnoozeUsersService.class);
         capsulePreferencesService = retrofit.create(CapsulePreferencesService.class);
         aController =  MainActivity.getInstance().getaController();
+        bookingService = retrofit.create(BookingService.class);
+        aController =  MainActivity.getInstance().getaController()
 
     }
 
-    public void register(String username, String email, String password){
-        SnoozeUsers snoozeUser = new SnoozeUsers("FH",username,email,false ,password);
+    public void register(String username, String email, String password) {
+        SnoozeUsers snoozeUser = new SnoozeUsers("FH", username, email, false, password);
 
-        Call<SnoozeUsers> call = service.postNewUser(userAccessToken,snoozeUser);
+        Call<SnoozeUsers> call = service.postNewUser(userAccessToken, snoozeUser);
 
         call.enqueue(new Callback<SnoozeUsers>() {
             @Override
             public void onResponse(Call<SnoozeUsers> call, Response<SnoozeUsers> response) {
-                if(!response.isSuccessful()){
+                if (!response.isSuccessful()) {
                     System.out.println("Code: " + response.code());
                     System.out.println("Message: " + response.message());
                 }
 
-                if (response!=null && response.body() != null && mListener != null) {
+                if (response != null && response.body() != null && mListener != null) {
 
                     JSONObject obj = new JSONObject();
                     try {
@@ -82,17 +87,14 @@ public class UserController {
                         obj.put("username", response.body().getUsername());
                         obj.put("email", response.body().getEmail());
                         obj.put("emailVerified", response.body().getEmailVerified());
-                    }
-                    catch (JSONException e){
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
                     mListener.responseData(obj);
 
 
-
                 }
-
 
 
             }
@@ -106,14 +108,13 @@ public class UserController {
 
     }
 
-    public void login(String email, String password){
+    public void login(String email, String password) {
         String username = "";
 
-        if(email.contains("@stud.fra-uas.de")){
+        if (email.contains("@stud.fra-uas.de")) {
             // WILL PER EMAIL ANMELDEN
             username = email;
-        }
-        else {
+        } else {
             // WILL PER USERNAME ANMELDEN
             username = email;
             email = "";
@@ -124,12 +125,12 @@ public class UserController {
         final String respUsername = username;
         final String respPassword = password;
 
-        Call<Session> call = service.login(userAccessToken,creds);
+        Call<Session> call = service.login(userAccessToken, creds);
 
         call.enqueue(new Callback<Session>() {
             @Override
             public void onResponse(Call<Session> call, Response<Session> response) {
-                if(!response.isSuccessful()){
+                if (!response.isSuccessful()) {
 
                     System.out.println("Code: " + response.code());
                     System.out.println("Message: " + response.message());
@@ -138,7 +139,7 @@ public class UserController {
                     mListener.responseData(obj);
                 }
 
-                if (response!=null && response.body() != null && mListener != null) {
+                if (response != null && response.body() != null && mListener != null) {
                     JSONObject obj = new JSONObject();
 
                     try {
@@ -150,8 +151,7 @@ public class UserController {
                         obj.put("password", respPassword);
 
 
-                    }
-                    catch (JSONException e){
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
@@ -174,9 +174,8 @@ public class UserController {
         });
     }
 
-
-    public void getBookings(){
-        System.out.println("GET BOOKINGS");
+    public void getUserData() {
+        System.out.println("GET USERDATA");
         System.out.println(userAccessToken);
 
         Call<JsonElement> call = service.getUserData(userAccessToken);
@@ -185,19 +184,18 @@ public class UserController {
             @Override
             public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
 
-                if(!response.isSuccessful()){
+                if (!response.isSuccessful()) {
                     System.out.println("Code: " + response.code());
                     System.out.println("Message: " + response.message());
                 }
 
-                if (response!=null && response.body() != null && mListener != null) {
+                if (response != null && response.body() != null && mListener != null) {
 
 
                     System.out.println(response.body());
                     bListener.responseBookings(response.body());
 
                 }
-
 
 
             }
@@ -211,22 +209,54 @@ public class UserController {
 
     }
 
+    public void changePassword(String oldPw,String newPw)
+    {
+        Call<SnoozeUsers> call = service.changePassword(userAccessToken,oldPw,newPw);
+
+        call.enqueue(new Callback<SnoozeUsers>() {
+            @Override
+            public void onResponse(Call<SnoozeUsers> call, Response<SnoozeUsers> response) {
+                if (!response.isSuccessful()) {
+                    System.out.println("Code: " + response.code());
+                    System.out.println("Message: " + response.message());
+                }
+
+                if (response!=null && response.body() != null && mListener != null) {
+
+
+                    System.out.println(response.body());
+
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<SnoozeUsers> call, Throwable t) {
+                System.out.println(t.getMessage());
+
+            }
+        });
+    }
+
     public void placeBooking(String successPaypal, String paymentID, Integer capsuleID, Integer startTimeFrame, Integer endTimeFrame){
         System.out.println("PLACE BOOKINGS");
-        System.out.println(userAccessToken);
 
         TimeZone tz = TimeZone.getTimeZone("UTC");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm'Z'"); // Quoted "Z" to indicate UTC, no timezone offset
         df.setTimeZone(tz);
         String nowAsISO = df.format(new Date());
 
-        Bookings booking = new Bookings(this.getUserID(),capsuleID,0, nowAsISO, startTimeFrame, endTimeFrame, "string", 2, true, "test@gmail.com", 2, nowAsISO);
+        Bookings booking = new Bookings(this.getUserID(),capsuleID,0, nowAsISO, startTimeFrame, endTimeFrame, "fh", (endTimeFrame - startTimeFrame) + 1, true, "test@gmail.com", 2, nowAsISO, paymentID, 0);
+        Log.d("Booking Object", booking.toString());
+        Log.d("Booking Date", booking.getDate());
+        Log.d("Access Token", userAccessToken);
 
-        Call<Bookings> call = bookingService.postBooking(userAccessToken, booking);
+        Call<JsonElement> call = bookingService.postBooking(userAccessToken, booking);
 
-        call.enqueue(new Callback<Bookings>() {
+        call.enqueue(new Callback<JsonElement>() {
             @Override
-            public void onResponse(Call<Bookings> call, Response<Bookings> response) {
+            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
 
                 if(!response.isSuccessful()){
                     System.out.println("Code: " + response.code());
@@ -246,7 +276,7 @@ public class UserController {
             }
 
             @Override
-            public void onFailure(Call<Bookings> call, Throwable t) {
+            public void onFailure(Call<JsonElement> call, Throwable t) {
                 System.out.println(t.getMessage());
 
             }

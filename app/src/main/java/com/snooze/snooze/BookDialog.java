@@ -31,6 +31,7 @@ import com.braintreepayments.api.models.Configuration;
 import com.braintreepayments.api.models.PayPalRequest;
 import com.braintreepayments.api.models.PaymentMethodNonce;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.snooze.api.snooze.Payment.PaymentHandler;
 import com.snooze.model.snooze.controller.AppController;
 
@@ -191,7 +192,6 @@ public class BookDialog extends AppCompatDialogFragment {
 
             JSONObject jsonObj = null;
             Boolean jsonMembers = null;
-
 
             try {
                 jsonObj = new JSONObject(capsules.toString());

@@ -200,10 +200,16 @@ public class Maps extends AppCompatActivity implements
                     Log.d("Time-Frame", timeFrame);
                     Log.d("Frame No", timeFrameNo.toString());
 
-                    // TODO START / END FRAME
-                    uController.placeBooking(success.toString(), payment.getPaymentID(), selectedCap, timeFrameNo,timeFrameNo + 1 );
+                    if(success){
+                        // TODO START / END FRAME
+                        uController.placeBooking(success.toString(), payment.getPaymentID(), selectedCap, timeFrameNo,timeFrameNo);
 
-                    Toast.makeText(Maps.this,"Succces: " + success.toString() + " with ID: " + payment.getPaymentID() , Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Maps.this,"Succces: " + success.toString() + " with ID: " + payment.getPaymentID() , Toast.LENGTH_SHORT).show();
+                    }
+                    else{
+                        Toast.makeText(Maps.this,"Failed to pay via paypal." , Toast.LENGTH_SHORT).show();
+                    }
+
                 }
             });
 
@@ -238,7 +244,7 @@ public class Maps extends AppCompatActivity implements
     public void setupBraintreeAndStartExpressCheckout(BraintreeFragment mBraintreeFragment, String token) {
         System.out.println("express checkout");
 
-        PayPalRequest request = new PayPalRequest("1")
+        PayPalRequest request = new PayPalRequest("2")
                 .currencyCode("EUR")
                 .intent(PayPalRequest.INTENT_AUTHORIZE);
         PayPal.requestOneTimePayment(mBraintreeFragment, request);

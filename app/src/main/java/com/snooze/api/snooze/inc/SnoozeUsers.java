@@ -57,6 +57,7 @@ public class SnoozeUsers {
     public void setEmailVerfified(Boolean emailVerfified){
         this.emailVerified = emailVerfified;
     }
+    public String getPassword(){return password;}
 
     public Integer getId(){
         return id;
