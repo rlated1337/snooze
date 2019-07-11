@@ -50,6 +50,7 @@ public class SpinnerAdapter extends ArrayAdapter<RowItem> {
 
         if(currentItem != null){
             textViewName.setText(currentItem.getText());
+            textViewName.setEnabled(currentItem.getAvailable());
         }
 
 
