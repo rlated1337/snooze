@@ -7,8 +7,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.snooze.api.snooze.ApiConnector;
 import com.snooze.api.snooze.BookingService;
+import com.snooze.api.snooze.CapsulePreferencesService;
 import com.snooze.api.snooze.SnoozeUsersService;
 import com.snooze.api.snooze.inc.Bookings;
+import com.snooze.api.snooze.inc.CapsulePreferences;
 import com.snooze.api.snooze.inc.Credentials;
 import com.snooze.api.snooze.inc.Session;
 import com.snooze.api.snooze.inc.SnoozeUsers;
@@ -32,10 +34,12 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class UserController {
+    private SnoozeUsers sUser;
     private UserService userservice;
     private User user;
     private Retrofit retrofit;
     private SnoozeUsersService service;
+    private CapsulePreferencesService capsulePreferencesService;
     private ApiConnector connect;
     private BookingService bookingService;
     private String userAccessToken;
@@ -59,6 +63,8 @@ public class UserController {
         connect = new ApiConnector();
         retrofit = connect.getRetrofitInstance();
         service = retrofit.create(SnoozeUsersService.class);
+        capsulePreferencesService = retrofit.create(CapsulePreferencesService.class);
+        aController =  MainActivity.getInstance().getaController();
         bookingService = retrofit.create(BookingService.class);
         aController =  MainActivity.getInstance().getaController();
         pinCapsule = new HashMap<>();
@@ -179,9 +185,8 @@ public class UserController {
         });
     }
 
-
-    public void getBookings(){
-        System.out.println("GET BOOKINGS");
+    public void getUserData() {
+        System.out.println("GET USERDATA");
         System.out.println(userAccessToken);
 
         Call<JsonElement> call = service.getUserData(userAccessToken);
@@ -221,6 +226,36 @@ public class UserController {
             }
         });
 
+    }
+
+    public void changePassword(String oldPw,String newPw)
+    {
+        Call<SnoozeUsers> call = service.changePassword(userAccessToken,oldPw,newPw);
+
+        call.enqueue(new Callback<SnoozeUsers>() {
+            @Override
+            public void onResponse(Call<SnoozeUsers> call, Response<SnoozeUsers> response) {
+                if (!response.isSuccessful()) {
+                    System.out.println("Code: " + response.code());
+                    System.out.println("Message: " + response.message());
+                }
+
+                if (response!=null && response.body() != null && mListener != null) {
+
+
+                    System.out.println(response.body());
+
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<SnoozeUsers> call, Throwable t) {
+                System.out.println(t.getMessage());
+
+            }
+        });
     }
 
     public void placeBooking(String successPaypal, String paymentID, Integer capsuleID, Integer startTimeFrame, Integer endTimeFrame){
@@ -297,6 +332,64 @@ public class UserController {
 
     public void setUserAccessToken(String userAccessToken) {
         this.userAccessToken = userAccessToken;
+    }
+
+    public void setCapsulePreferences(Integer bedLegAngle, Integer bedBackAngle, Integer lightLevel,
+                                     Integer volumenLevel, String lightColor, Integer bedMidAngle){
+
+        CapsulePreferences capsulePreferences = new CapsulePreferences(this.getUserID(),bedLegAngle,bedBackAngle,lightLevel,
+                volumenLevel,lightColor,bedMidAngle);
+
+        Call<CapsulePreferences> call = capsulePreferencesService.patchCapsulePreferences(userAccessToken,capsulePreferences);
+
+        call.enqueue(new Callback<CapsulePreferences>() {
+            @Override
+            public void onResponse(Call<CapsulePreferences> call, Response<CapsulePreferences> response) {
+                if(!response.isSuccessful()){
+                    System.out.println("Code: " + response.code());
+                    System.out.println("Message: " + response.message());
+                }
+
+                if (response!=null && response.body() != null && mListener != null) {
+
+
+                    System.out.println(response.body());
+                    //bListener.responseBookings(response.body());
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<CapsulePreferences> call, Throwable t) {
+                System.out.println(t.getMessage());
+            }
+        });
+    }
+
+    public void getCapsulePreferencesById(){
+        Call<JsonElement> call = service.getUserData(userAccessToken);
+
+        call.enqueue(new Callback<JsonElement>() {
+            @Override
+            public void onResponse(Call<JsonElement> call, Response<JsonElement> response) {
+                if(!response.isSuccessful()){
+                    System.out.println("Code: " + response.code());
+                    System.out.println("Message: " + response.message());
+                }
+
+                if (response!=null && response.body() != null && mListener != null) {
+                    System.out.println(response.body());
+                    bListener.responseBookings(response.body());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<JsonElement> call, Throwable t) {
+
+            }
+        });
+
     }
 
 

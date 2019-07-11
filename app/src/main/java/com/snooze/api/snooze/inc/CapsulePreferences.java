@@ -19,16 +19,24 @@ public class CapsulePreferences {
     @SerializedName("VolumenLevel")
     private Integer volumenLevel;
 
+    @SerializedName("LightColor")
+    private String lightColor;
+
+    @SerializedName("BedMidAngle")
+    private Integer bedMidAngle;
+
     @SerializedName("id")
     private Integer id;
 
     public CapsulePreferences(Integer snoozeuser_id, Integer bedLegAngle, Integer bedBackAngle, Integer lightLevel,
-                              Integer volumenLevel) {
+                              Integer volumenLevel, String lightColor, Integer bedMidAngle) {
         this.snoozeuser_id = snoozeuser_id;
         this.bedLegAngle = bedLegAngle;
         this.bedBackAngle = bedBackAngle;
         this.lightLevel = lightLevel;
         this.volumenLevel = volumenLevel;
+        this.lightColor = lightColor;
+        this.bedMidAngle = bedMidAngle;
     }
 
     public Integer getSnoozeuser_id() {
@@ -69,6 +77,22 @@ public class CapsulePreferences {
 
     public void setVolumenLevel(Integer volumenLevel) {
         this.volumenLevel = volumenLevel;
+    }
+
+    public String getLightColor() {
+        return lightColor;
+    }
+
+    public void setLightColor(String lightColor) {
+        this.lightColor = lightColor;
+    }
+
+    public Integer getBedMidAngle() {
+        return bedMidAngle;
+    }
+
+    public void setBedMidAngle(Integer bedMidAngle) {
+        this.bedMidAngle = bedMidAngle;
     }
 
     public Integer getId() {

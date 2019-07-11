@@ -70,7 +70,7 @@ public class Booking extends AppCompatActivity {
         mRecyclerView = findViewById(R.id.RecyclerView_Bookings);
         mBookings = new ArrayList<>();
 
-        uController.getBookings();
+        uController.getUserData();
 
         uController.setOnBookingListener(new UserController.DataInterfaceBookings() {
             @Override

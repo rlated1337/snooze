@@ -14,8 +14,202 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/rounded_button"
-        android:text="Back"
+        android:text="@string/btn_Settings_Back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/edtLightLevel"
+        android:layout_width="60dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/edtVolumenLevel"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/edtVolumenLevel"
+        android:layout_width="60dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/edtLightColor"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/edtLightColor"
+        android:layout_width="60dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/edtBedMidAngleNumber"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/txtBedLegAngle"
+        android:layout_width="145dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/txtBedLegAngle"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/txtBedBackAngle"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtBedBackAngle"
+        android:layout_width="145dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/txtBedBackAngle"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/txtLightLevel"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtVolumenLevel"
+        android:layout_width="145dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/txtVolumenLevel"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/txtLightColor"
+        app:layout_constraintEnd_toStartOf="@+id/edtVolumenLevel"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtLightColor"
+        android:layout_width="145dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/txtLightColor"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/txtBedMidAngle"
+        app:layout_constraintEnd_toStartOf="@+id/edtLightColor"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtBedMidAngle"
+        android:layout_width="145dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="140dp"
+        android:text="@string/txtBedMidAngle"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/txtLightLevel"
+        android:layout_width="145dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/txtLightLevel"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/txtVolumenLevel"
+        app:layout_constraintEnd_toStartOf="@+id/edtLightLevel"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/rounded_button"
+        android:text="@string/btnSubmit"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <SeekBar
+        android:id="@+id/skbBedLegAngle"
+        android:layout_width="143dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="32dp"
+        android:max="180"
+        app:layout_constraintBottom_toTopOf="@+id/skbBedBackAngle"
+        app:layout_constraintEnd_toStartOf="@+id/edtBedLegAngleNumber"
+        app:layout_constraintStart_toEndOf="@+id/txtBedLegAngle" />
+
+    <SeekBar
+        android:id="@+id/skbBedBackAngle"
+        android:layout_width="143dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="32dp"
+        android:max="270"
+        app:layout_constraintBottom_toTopOf="@+id/edtLightLevel"
+        app:layout_constraintEnd_toStartOf="@+id/edtBedBackAngleNumber"
+        app:layout_constraintStart_toEndOf="@+id/txtBedBackAngle" />
+
+    <SeekBar
+        android:id="@+id/skbBedMidAngle"
+        android:layout_width="143dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginBottom="140dp"
+        android:max="180"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/edtBedMidAngleNumber"
+        app:layout_constraintStart_toEndOf="@+id/txtBedMidAngle" />
+
+    <EditText
+        android:id="@+id/edtBedLegAngleNumber"
+        android:layout_width="60dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/edtBedBackAngleNumber"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/edtBedBackAngleNumber"
+        android:layout_width="60dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="32dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/edtLightLevel"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <EditText
+        android:id="@+id/edtBedMidAngleNumber"
+        android:layout_width="60dp"
+        android:layout_height="41dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="140dp"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
