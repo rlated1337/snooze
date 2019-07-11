@@ -209,7 +209,7 @@ public class UserController {
 
                     JsonObject obj = element.getAsJsonObject();
 
-                    pinCapsule.put(obj.get("Capsule_id").toString(), obj.get("pin").toString());
+//                    pinCapsule.put(obj.get("Capsule_id").toString(), obj.get("pin").toString());
 
                     bListener.responseBookings(response.body());
 

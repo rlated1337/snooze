@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ScrollView;
@@ -52,7 +53,7 @@ public class Booking extends AppCompatActivity {
     private List<String> listName = new ArrayList<>();
     private List<String> listPin = new ArrayList<>();
     private List<String> listTime = new ArrayList<>();
-
+    private SparseArray timeFrameTranslation;
 
 
     @Override
@@ -68,7 +69,7 @@ public class Booking extends AppCompatActivity {
             }
         });
         uController = MainActivity.getInstance().getuController();
-
+        initTimeFrameMap();
         mRecyclerView = findViewById(R.id.RecyclerView_Bookings);
         mBookings = new ArrayList<>();
 
@@ -128,6 +129,8 @@ public class Booking extends AppCompatActivity {
             listName.add(i,resultName);
             System.out.println(resultName);
 
+
+            listTime.add(timeFrameTranslation.get(firstTimeFrame).toString());
 
 
 
